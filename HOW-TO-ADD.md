@@ -4,7 +4,15 @@
 - `index.html`、`reader.js`、`reader.css`：版面與功能，平常不用動。
 - `data/articles.js`：每則新知的全文版內容（含三十秒導讀、一句話、出處）。
 - `data/slides.js`：每則新知的翻頁簡報內容頁與小測驗。
-新增一則新知＝兩個 data 檔各加一筆（id 要相同）。若 slides.js 沒有對應資料，翻頁模式仍會有封面、導讀、一句話三頁。
+- `data/posts.js`：GEL-net 文章做成的新知（2026-10-14 起的做法），由 `_來源/drafts/<id>.js` 串接而成，請勿直接改。
+- `data/merge.js`：把 posts.js 併入主資料（同 id 取代舊條目）。
+
+## 2026-10-14 起的標準流程（GEL-net 文章）
+1. `python3 -I _來源/fetch_gelnet.py _來源/gelnet`（先在檔內 URLS 加上新網址）抓全文；作者與日期以文末 APA 引用行為準。
+2. 依 `_來源/草稿規格.md` 撰寫 `_來源/drafts/<id>.js` 與 `<id>_證據.md`（逐句附原文行號）。
+3. 另派審查者對照原文，產生 `_來源/review/<id>_修正.json`，用 `python3 -I _來源/apply_fixes.py _來源 <id>` 套用。
+4. `python3 -I _來源/build_posts.py .` 重建 data/posts.js，預覽檢查後推上 GitHub。
+原文的圖表是圖片時，文字抓不到，需另外下載圖片核對（例：_來源/oecd_tables/）。
 
 ## 最簡單的做法（交給 Claude）
 把新文章（GEL-net 連結、docx 或 PDF）丟給 Claude，說：

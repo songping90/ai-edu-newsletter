@@ -35,7 +35,7 @@
     if (s.cards) {
       const solo = s.cards.every(c => !c.d);
       const cols = s.cards.length === 4 && s.cols === 4 && solo ? "g4 solo4" : "g" + (s.cols || Math.min(s.cards.length, 3));
-      h += `<div class="g ${cols}">${s.cards.map(c => `<div class="card2 ${c.d ? "" : "solo"}">${c.ico ? `<div class="ico">${c.ico}</div>` : ""}${c.tag ? `<div class="tag">${esc(c.tag)}</div>` : ""}<h3>${md(c.t)}</h3>${c.d ? `<p>${md(c.d)}</p>` : ""}${c.note ? `<p class="note">${md(c.note)}</p>` : ""}</div>`).join("")}</div>`;
+      h += `<div class="g ${cols} ${s.cards.length >= 5 ? "many" : ""}">${s.cards.map(c => `<div class="card2 ${c.d ? "" : "solo"}">${c.ico ? `<div class="ico">${c.ico}</div>` : ""}${c.tag ? `<div class="tag">${esc(c.tag)}</div>` : ""}<h3>${md(c.t)}</h3>${c.d ? `<p>${md(c.d)}</p>` : ""}${c.note ? `<p class="note">${md(c.note)}</p>` : ""}</div>`).join("")}</div>`;
     }
     if (s.steps) h += `<ol class="steps">${s.steps.map(x => `<li><b>${md(x.t)}</b>${x.d ? `<span>${md(x.d)}</span>` : ""}</li>`).join("")}</ol>`;
     if (s.ladder) {
@@ -61,14 +61,14 @@
 
   function topicLine(a) { return a.topics.map(k => T[k] ? T[k].emoji + " " + T[k].name : "").join("　"); }
 
+  const dateOf = a => a.date || ((I[a.issue] || {}).date) || "";
   function coverSlide(a) {
-    const iss = I[a.issue] || {};
     return slide(colorOf(a), `
-      <span class="kick">📰 AI教育資訊快報｜第 ${a.issue} 期</span>
+      <span class="kick">📰 AI教育資訊快報</span>
       <div class="sbody" style="gap:26px">
         <h1>${esc(a.title)}</h1>
         <div class="sub">${esc(topicLine(a))}</div>
-        <div class="meta"><span>📅 <b>${fmt(iss.date)}</b></span>${a.authors ? `<span>✍️ <b>${esc(a.authors)}</b></span>` : ""}</div>
+        <div class="meta"><span>📅 <b>${fmt(dateOf(a))}</b></span>${a.authors ? `<span>✍️ <b>${esc(a.authors)}</b></span>` : ""}</div>
       </div>
       <p class="src" style="padding-left:0">按 → 或空白鍵翻頁，手機可左右滑動</p>`, { cls: "cover", deco: emojiOf(a), sec: true });
   }
@@ -136,7 +136,7 @@
 
   /* ---------- 組 deck ---------- */
   function sortedArts() {
-    return ARTS.slice().sort((a, b) => ((I[b.issue] || {}).date || "").localeCompare((I[a.issue] || {}).date || "") || ARTS.indexOf(a) - ARTS.indexOf(b));
+    return ARTS.slice().sort((a, b) => dateOf(b).localeCompare(dateOf(a)) || ARTS.indexOf(a) - ARTS.indexOf(b));
   }
   function quizOf(a) { return ((SL[a.id] || {}).quiz || []).map(q => Object.assign({ color: colorOf(a) }, q)); }
 
@@ -144,7 +144,7 @@
     const order = sortedArts(); const nx = order[order.indexOf(a) + 1];
     const quiz = quizOf(a);
     const html = [coverSlide(a), tldrSlide(a), ...contentSlides(a), takeawaySlide(a), ...quizSlides(quiz, colorOf(a)),
-      endSlide(colorOf(a), nx ? { href: "#/s/" + nx.id, kick: "下一則（第 " + nx.issue + " 期）", title: nx.title } : null, a.title)];
+      endSlide(colorOf(a), nx ? { href: "#/s/" + nx.id, kick: "下一則", title: nx.title } : null, a.title)];
     return { title: a.title, color: colorOf(a), html, quiz, fullHref: "#/a/" + a.id, base: "#/s/" + a.id };
   }
 

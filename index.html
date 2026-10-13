@@ -197,6 +197,43 @@ select.sel { font: inherit; font-size: 16px; color: var(--ink); background: var(
 .empty { background: var(--paper); border-radius: 18px; padding: 30px; text-align: center; color: var(--mute); box-shadow: var(--shadow); }
 mark { background: color-mix(in srgb, #F0B35A 45%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
 
+/* ===== 清爽版首頁 ===== */
+.hero .lead { margin-bottom: 18px; }
+.ghostbtn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--ink); background: var(--paper); border: 1px solid var(--line); font-weight: 700; font-size: 17px; padding: 11px 20px; border-radius: 14px; }
+.ghostbtn:hover { border-color: var(--brand); color: var(--brand); }
+.ghostbtn.sm { font-size: 14.5px; padding: 6px 12px; border-radius: 10px; }
+.hero .tiny { color: var(--mute); font-size: 15px; margin: 0; }
+.btiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 900px) { .btiles { grid-template-columns: 1fr; } }
+.btile { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); background: var(--paper); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s; }
+.btile:hover { transform: translateY(-4px); box-shadow: var(--shadow-hi); }
+.btile .band { position: relative; height: 128px; background: radial-gradient(circle, color-mix(in srgb, var(--c) 30%, transparent) 0 2px, transparent 3px) 0 0 / 20px 20px, var(--c-soft); border-top: 8px solid var(--c); display: grid; place-items: center; }
+.btile .band .em { font-size: 64px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.15)); transform: rotate(-6deg); }
+.btile .band .new, .btile .band .read { position: absolute; left: 14px; top: 12px; }
+.btile .tb { padding: 16px 20px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.btile .tname { font-size: 14px; font-weight: 700; color: var(--c-acc); letter-spacing: .04em; }
+.btile h3 { margin: 0; font-size: 20px; line-height: 1.45; color: var(--title); flex: 1; }
+.btile .go { font-weight: 700; color: var(--c-acc); font-size: 15.5px; margin-top: 6px; }
+.searchbtn { margin-left: auto; align-self: center; }
+.searchrow { margin: -4px 0 14px; display: flex; }
+.searchrow[hidden] { display: none; }
+.chiprow { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.tchip { font: inherit; font-size: 15px; font-weight: 500; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.tchip:hover { border-color: var(--c, var(--brand)); }
+.tchip.on { background: var(--c, var(--brand)); border-color: var(--c, var(--brand)); color: #fff; font-weight: 700; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 12px; }
+.tile { display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center; background: var(--paper); border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow); border-left: 6px solid var(--c); cursor: pointer; transition: transform .15s, box-shadow .15s; }
+.tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-hi); }
+.tile:focus-visible { outline: 3px solid var(--c); outline-offset: 3px; }
+.tile .em { width: 56px; height: 56px; border-radius: 14px; background: var(--c-soft); display: grid; place-items: center; font-size: 30px; }
+.tile h3 { margin: 0; font-size: 17.5px; line-height: 1.45; color: var(--title); }
+.tile .meta { font-size: 14px; color: var(--mute); margin-top: 2px; }
+.tile .arrow { color: var(--c-acc); font-size: 16px; }
+details.archive { background: var(--paper); border-radius: 16px; box-shadow: var(--shadow); padding: 4px 18px; }
+details.archive summary { cursor: pointer; font-weight: 700; color: var(--title); font-size: 18px; padding: 12px 0; }
+.arow { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.arow small { color: var(--mute); margin-left: 10px; font-size: 14px; }
+
 /* ===== 歷期 ===== */
 .timeline { position: relative; padding-left: 30px; }
 .timeline::before { content: ""; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 3px; background: var(--line); border-radius: 2px; }
@@ -352,10 +389,9 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
       <span class="txt"><b>AI教育資訊快報</b><small>數位科技轉化大學師培課程培訓計畫</small></span>
     </a>
     <nav class="navlinks">
-      <a href="#/" data-jump="focus">本期焦點</a>
-      <a href="#/" data-jump="topics">主題地圖</a>
+      <a href="#/" data-jump="latest">最新</a>
       <a href="#/" data-jump="all">全部新知</a>
-      <a href="#/" data-jump="issues">歷期快報</a>
+      <a href="#/" data-jump="issues">快報合輯</a>
     </nav>
     <button class="iconbtn" id="themeBtn" type="button" aria-label="切換深淺色">🌓</button>
   </div>
@@ -371,6 +407,8 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 
 <script src="data/articles.js"></script>
 <script src="data/slides.js"></script>
+<script src="data/posts.js"></script>
+<script src="data/merge.js"></script>
 <script src="reader.js"></script>
 <script>
 (function () {
@@ -407,111 +445,97 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     return "";
   }
   ARTS.forEach(a => {
-    a._issue = I[a.issue] || { no: a.issue, date: "" };
+    a._issue = I[a.issue] || null;
+    a._date = a.date || (a._issue ? a._issue.date : "");
     a._text = [a.title, a.authors, flat(a.tldr), a.takeaway, flat(a.body), a.topics.map(k => T[k] ? T[k].name : "").join(" ")].join(" ").replace(/\*\*/g, "").toLowerCase();
   });
-  const sorted = ARTS.slice().sort((a, b) => (b._issue.date || "").localeCompare(a._issue.date || "") || ARTS.indexOf(a) - ARTS.indexOf(b));
+  const sorted = ARTS.slice().sort((a, b) => (b._date || "").localeCompare(a._date || "") || ARTS.indexOf(a) - ARTS.indexOf(b));
+  const NEWEST = new Set(sorted.slice(0, 3).map(a => a.id));
 
   const R = window.KBReader;
   const PAGES = Object.fromEntries(ARTS.map(a => [a.id, R ? R.pages(a.id) : 0]));
+  const mins = a => Math.max(2, Math.round((PAGES[a.id] || 6) * 0.35));
   let READ = R ? R.readSet() : new Set();
 
-  /* ---------- 主題、期數狀態 ---------- */
-  const state = { q: "", topic: "", issue: "", view: store.get("kb-view") || "full" };
+  /* ---------- 篩選狀態 ---------- */
+  const state = { q: "", topic: "", issue: "", searchOpen: false };
 
   function hl(text, q) {
-    const s = md(text);
+    const s = esc(text);
     if (!q) return s;
     const qq = esc(q).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    return s.replace(new RegExp("(" + qq + ")(?![^<]*>)", "gi"), "<mark>$1</mark>");
+    return s.replace(new RegExp("(" + qq + ")", "gi"), "<mark>$1</mark>");
   }
-
   function tagHTML(k) {
     const t = T[k]; if (!t) return "";
     return `<span class="tag" style="--c:${t.color}">${t.emoji} ${esc(t.name)}</span>`;
   }
 
-  function cardHTML(a, q) {
-    const isNew = latest && a.issue === latest.no;
-    return `<article class="card ${state.view === "compact" ? "compact" : ""}" style="--c:${color(a)}" tabindex="0" data-id="${a.id}" role="link" aria-label="${esc(a.title)}">
-      <div class="top">${isNew ? '<span class="new">NEW</span>' : ""}${READ.has(a.id) ? '<span class="read">✓ 已讀</span>' : ""}<span>第 ${a.issue} 期 · ${fmtDate(a._issue.date)}</span></div>
-      <div class="top">${a.topics.map(tagHTML).join("")}</div>
-      <h3>${hl(a.title, q)}</h3>
-      <div class="tldr-label">⏱ 三十秒導讀</div>
-      <ol>${a.tldr.map(t => `<li>${hl(t, q)}</li>`).join("")}</ol>
-      <div class="take"><b>給師培課程的一句話</b>${hl(a.takeaway, q)}</div>
-      <div class="cta"><a class="go" href="#/s/${a.id}">▶ 翻頁閱讀 · ${PAGES[a.id]} 頁</a><a class="alt" href="#/a/${a.id}">📄 全文</a></div>
+  /* 大卡：最新三則，只放圖示、主題、標題 */
+  function bigTile(a) {
+    const t = T[a.topics[0]] || {};
+    return `<a class="btile" href="#/s/${a.id}" style="--c:${color(a)}">
+      <div class="band"><span class="em">${deco(a)}</span>${READ.has(a.id) ? '<span class="read">✓ 已讀</span>' : '<span class="new">NEW</span>'}</div>
+      <div class="tb">
+        <span class="tname">${esc(t.name || "")}</span>
+        <h3>${esc(a.title)}</h3>
+        <span class="go">▶ 翻頁閱讀 · 約 ${mins(a)} 分鐘</span>
+      </div></a>`;
+  }
+  /* 小卡：全部新知，只放標題與日期 */
+  function tile(a, q) {
+    return `<article class="tile" style="--c:${color(a)}" tabindex="0" data-id="${a.id}" role="link" aria-label="${esc(a.title)}">
+      <span class="em">${deco(a)}</span>
+      <div class="tt">
+        <h3>${hl(a.title, q)}</h3>
+        <div class="meta">${fmtDate(a._date)}${NEWEST.has(a.id) && !READ.has(a.id) ? ' · <span class="new">NEW</span>' : ""}${READ.has(a.id) ? ' · <span class="read">✓ 已讀</span>' : ""}</div>
+      </div>
+      <span class="arrow">▶</span>
     </article>`;
   }
 
   /* ---------- 首頁 ---------- */
   function renderHome(scrollTo) {
-    const totalRefs = ARTS.reduce((n, a) => n + (a.refs ? a.refs.length : 0), 0);
-    const focusArts = sorted.filter(a => latest && a.issue === latest.no);
+    const unread = ARTS.filter(a => !READ.has(a.id)).length;
+    const first = sorted.find(a => !READ.has(a.id)) || sorted[0];
+    const used = TOPICS.filter(t => ARTS.some(a => a.topics.includes(t.key)));
     app.innerHTML = `
     <section class="hero"><div class="wrap">
       <span class="kick">📰 給大學師培教授的 AI 教育新知</span>
       <h1>AI教育資訊快報</h1>
-      <p class="lead">像翻簡報一樣讀新知：每則先看三個重點，再一頁一頁看圖解，最後用一分鐘小測驗回顧。想深入，隨時切到全文版。</p>
-      ${latest ? `<div class="cta-row"><a class="playbtn" href="#/i/${latest.no}">▶ 翻閱第 ${latest.no} 期快報 <small>${R ? R.issuePages(latest.no) : ""} 頁</small></a></div>` : ""}
-      <div class="stats">
-        <div class="stat"><b>${ARTS.length}</b>則新知</div>
-        ${READ.size ? `<div class="stat">你已讀 <b>${ARTS.filter(a => READ.has(a.id)).length}</b>則，未讀 <b>${ARTS.filter(a => !READ.has(a.id)).length}</b>則</div>` : ""}
-        <div class="stat"><b>${ISSUES.length}</b>期快報</div>
-        <div class="stat"><b>${TOPICS.filter(t => ARTS.some(a => a.topics.includes(t.key))).length}</b>個主題</div>
-        <div class="stat"><b>${totalRefs}</b>筆出處</div>
-        <div class="stat">最近更新 <b style="font-size:17px">${latest ? fmtDate(latest.date) : ""}</b></div>
+      <p class="lead">一則一則翻，每則約三分鐘。</p>
+      <div class="cta-row">
+        ${first ? `<a class="playbtn" href="#/s/${first.id}">▶ ${READ.size ? "從下一則未讀開始" : "從最新一則開始"}</a>` : ""}
+        <a class="ghostbtn" href="#/" data-jump="all">瀏覽全部 ↓</a>
       </div>
+      <p class="tiny">共 ${ARTS.length} 則 · 最近更新 ${fmtDate(sorted[0] ? sorted[0]._date : "")}${READ.size ? ` · 還有 ${unread} 則未讀` : ""}</p>
       <div class="deco">🧭</div>
     </div></section>
 
-    ${latest ? `<section class="block" id="focus"><div class="wrap">
-      <div class="sec-h"><h2>本期焦點</h2></div>
-      <div class="issue-banner">
-        <div class="meta"><span class="no">第 ${latest.no} 期</span><span>${fmtDate(latest.date)}</span></div>
-        <h3>${esc(latest.title)}</h3>
-        ${latest.intro ? `<p class="intro">${md(latest.intro)}</p>` : ""}
-        <p style="margin:0 0 16px"><a class="playbtn" href="#/i/${latest.no}">▶ 整期翻頁閱讀 <small>${R ? R.issuePages(latest.no) : ""} 頁，含小測驗</small></a></p>
-        <div class="feat-grid">${focusArts.map(a => cardHTML(a, "")).join("")}</div>
-      </div>
-    </div></section>` : ""}
-
-    <section class="block" id="topics"><div class="wrap">
-      <div class="sec-h"><h2>主題地圖</h2><span class="sub">點一個主題，下方只列出相關新知</span></div>
-      <div class="topic-map">${TOPICS.map(t => {
-        const n = ARTS.filter(a => a.topics.includes(t.key)).length;
-        return `<button class="topic ${state.topic === t.key ? "on" : ""}" style="--c:${t.color}" data-topic="${t.key}" type="button">
-          <span class="em">${t.emoji}</span><b>${esc(t.name)}</b><span class="cnt">${n}</span><span class="d">${esc(t.desc)}</span></button>`;
-      }).join("")}</div>
+    <section class="block" id="latest"><div class="wrap">
+      <div class="sec-h"><h2>最新</h2></div>
+      <div class="btiles">${sorted.slice(0, 3).map(bigTile).join("")}</div>
     </div></section>
 
     <section class="block" id="all"><div class="wrap">
-      <div class="sec-h"><h2>全部新知</h2><span class="sub">可搜尋全文，例如「評量」「新加坡」「布魯姆」</span></div>
-      <div class="filters">
-        <label class="search">🔍<input id="q" type="search" placeholder="搜尋標題、導讀與全文…" value="${esc(state.q)}" aria-label="搜尋"></label>
-        <select class="sel" id="issueSel" aria-label="期數">
-          <option value="">全部期數</option>
-          ${ISSUES.map(i => `<option value="${i.no}" ${String(state.issue) === String(i.no) ? "selected" : ""}>第 ${i.no} 期 · ${fmtDate(i.date)}</option>`).join("")}
-        </select>
-        <div class="viewtoggle" role="group" aria-label="顯示方式">
-          <button type="button" data-view="full" class="${state.view === "full" ? "on" : ""}">導讀卡</button>
-          <button type="button" data-view="compact" class="${state.view === "compact" ? "on" : ""}">只看標題</button>
-        </div>
+      <div class="sec-h"><h2>全部新知</h2>
+        <button class="iconbtn searchbtn" id="searchBtn" type="button" aria-label="搜尋">🔍 搜尋</button></div>
+      <div class="searchrow" id="searchRow" ${state.searchOpen || state.q ? "" : "hidden"}>
+        <label class="search">🔍<input id="q" type="search" placeholder="輸入關鍵字，例如：評量、荷蘭、PISA" value="${esc(state.q)}" aria-label="搜尋"></label>
+      </div>
+      <div class="chiprow" role="group" aria-label="主題">
+        <button type="button" class="tchip ${state.topic ? "" : "on"}" data-topic="">全部</button>
+        ${used.map(t => `<button type="button" class="tchip ${state.topic === t.key ? "on" : ""}" style="--c:${t.color}" data-topic="${t.key}">${t.emoji} ${esc(t.name)}</button>`).join("")}
       </div>
       <div class="active-filter" id="af"></div>
-      <div class="grid" id="grid"></div>
+      <div class="tiles" id="grid"></div>
     </div></section>
 
-    <section class="block" id="issues"><div class="wrap">
-      <div class="sec-h"><h2>歷期快報</h2><span class="sub">依出刊時間</span></div>
-      <div class="timeline">${ISSUES.map(i => {
-        const list = sorted.filter(a => a.issue === i.no);
-        return `<div class="tl-item"><div class="h"><b>第 ${i.no} 期　${esc(i.title)}</b><span>${fmtDate(i.date)}</span></div>
-          <ul>${list.map(a => `<li><a href="#/a/${a.id}">${esc(a.title)}</a></li>`).join("")}</ul>
-          <div style="margin:4px 0 6px"><a class="playbtn" style="font-size:15.5px;padding:7px 14px" href="#/i/${i.no}">▶ 翻閱這一期</a></div>
-          ${i.legacy ? `<div class="legacy">原始版本：<a href="${esc(i.legacy)}" target="_blank" rel="noopener">Gemini 快報頁</a></div>` : ""}</div>`;
-      }).join("")}</div>
-    </div></section>`;
+    ${ISSUES.length ? `<section class="block" id="issues"><div class="wrap">
+      <details class="archive" ${state.issue ? "open" : ""}><summary>📚 舊版快報合輯（${ISSUES.length} 期）</summary>
+        ${ISSUES.map(i => `<div class="arow"><span><b>第 ${i.no} 期</b>　${esc(i.title)}<small>${fmtDate(i.date)}</small></span><a class="ghostbtn sm" href="#/i/${i.no}">▶ 翻閱這一期</a></div>`).join("")}
+      </details>
+    </div></section>` : ""}`;
 
     renderGrid();
     bindHome();
@@ -527,45 +551,43 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
       (!state.topic || a.topics.includes(state.topic)) &&
       (!state.issue || String(a.issue) === String(state.issue)) &&
       (!q || a._text.includes(q)));
-    const grid = document.getElementById("grid");
-    grid.innerHTML = list.length ? list.map(a => cardHTML(a, state.q.trim())).join("")
-      : `<div class="empty">找不到符合的新知，換個關鍵字或清除篩選試試。</div>`;
-    const af = document.getElementById("af");
+    document.getElementById("grid").innerHTML = list.length ? list.map(a => tile(a, state.q.trim())).join("")
+      : `<div class="empty">找不到符合的新知，換個關鍵字試試。</div>`;
     const bits = [];
-    if (state.topic) bits.push(tagHTML(state.topic));
-    if (state.issue) bits.push(`<span class="tag">第 ${state.issue} 期</span>`);
+    if (state.issue) bits.push(`<span class="tag">第 ${state.issue} 期快報</span>`);
     if (q) bits.push(`<span class="tag">「${esc(state.q.trim())}」</span>`);
-    af.innerHTML = bits.length ? `目前顯示 ${list.length} 則：${bits.join("")}<button class="clear" id="clearF" type="button">清除篩選</button>` : "";
+    const af = document.getElementById("af");
+    af.innerHTML = (bits.length || state.topic) ? `${list.length} 則 ${bits.join("")}<button class="clear" id="clearF" type="button">清除</button>` : "";
     const c = document.getElementById("clearF");
-    if (c) c.onclick = () => { state.q = ""; state.topic = ""; state.issue = ""; document.getElementById("q").value = ""; document.getElementById("issueSel").value = ""; syncTopics(); renderGrid(); };
+    if (c) c.onclick = () => { state.q = ""; state.topic = ""; state.issue = ""; const qi = document.getElementById("q"); if (qi) qi.value = ""; syncTopics(); renderGrid(); };
   }
 
   function syncTopics() {
-    document.querySelectorAll(".topic").forEach(b => b.classList.toggle("on", b.dataset.topic === state.topic));
+    document.querySelectorAll(".tchip").forEach(b => b.classList.toggle("on", b.dataset.topic === state.topic));
   }
 
   function bindHome() {
     document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; renderGrid(); });
-    document.getElementById("issueSel").addEventListener("change", e => { state.issue = e.target.value; renderGrid(); });
-    document.querySelectorAll(".topic").forEach(b => b.addEventListener("click", () => {
-      state.topic = state.topic === b.dataset.topic ? "" : b.dataset.topic;
-      syncTopics(); renderGrid();
-      document.getElementById("all").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      const row = document.getElementById("searchRow");
+      row.hidden = !row.hidden; state.searchOpen = !row.hidden;
+      if (!row.hidden) document.getElementById("q").focus();
+    });
+    document.querySelectorAll(".tchip").forEach(b => b.addEventListener("click", () => {
+      state.topic = b.dataset.topic; syncTopics(); renderGrid();
     }));
-    document.querySelectorAll(".viewtoggle button").forEach(b => b.addEventListener("click", () => {
-      state.view = b.dataset.view; store.set("kb-view", state.view);
-      document.querySelectorAll(".viewtoggle button").forEach(x => x.classList.toggle("on", x === b));
-      renderGrid();
+    app.querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", e => {
+      e.preventDefault(); document.getElementById(a.dataset.jump).scrollIntoView({ behavior: "smooth" });
     }));
   }
 
   /* 卡片點擊（委派） */
   app.addEventListener("click", e => {
-    const card = e.target.closest(".card");
+    const card = e.target.closest(".tile");
     if (card && !e.target.closest("a")) location.hash = "#/s/" + card.dataset.id;
   });
   app.addEventListener("keydown", e => {
-    const card = e.target.closest && e.target.closest(".card");
+    const card = e.target.closest && e.target.closest(".tile");
     if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); location.hash = "#/s/" + card.dataset.id; }
   });
 
@@ -618,12 +640,12 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     const prev = sorted[idx - 1], next = sorted[idx + 1];
     document.title = a.title + "｜AI教育資訊快報";
     app.innerHTML = `<div class="article" style="--c:${color(a)}"><div class="wrap">
-      <div class="crumb"><a href="#/">首頁</a>›<a href="#/issue/${a.issue}">第 ${a.issue} 期</a>›<span>${esc(a.title)}</span></div>
+      <div class="crumb"><a href="#/">首頁</a>›<span>全文版</span>›<span>${esc(a.title)}</span></div>
       <div class="a-head">
         <span class="deco">${deco(a)}</span>
         <div class="top" style="display:flex;gap:8px;flex-wrap:wrap">${a.topics.map(k => `<a class="tag" style="--c:${T[k] ? T[k].color : ""}" href="#/topic/${k}">${T[k] ? T[k].emoji + " " + esc(T[k].name) : k}</a>`).join("")}</div>
         <h1>${esc(a.title)}</h1>
-        <div class="meta"><span>📅 第 ${a.issue} 期 · ${fmtDate(a._issue.date)}</span>${a.authors ? `<span>✍️ ${esc(a.authors)}</span>` : ""}</div>
+        <div class="meta"><span>📅 ${fmtDate(a._date)}</span>${a._issue ? `<span>📚 收錄於第 ${a.issue} 期快報</span>` : ""}${a.authors ? `<span>✍️ ${esc(a.authors)}</span>` : ""}</div>
       </div>
 
       <div class="quick">
