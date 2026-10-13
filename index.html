@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="reader.css">
 <style>
 :root {
   --paper: #FFFFFF;
@@ -155,7 +156,18 @@ section.block { padding: 26px 0 30px; scroll-margin-top: 80px; }
 .take { background: var(--c-soft); border-radius: 12px; padding: 10px 14px; font-size: 16px; line-height: 1.65; }
 .take b { color: var(--c-acc); display: block; font-size: 13.5px; letter-spacing: .05em; margin-bottom: 2px; }
 .card .more { margin-top: auto; padding-top: 4px; font-weight: 700; color: var(--c-acc); font-size: 15.5px; }
-.card.compact ol, .card.compact .take { display: none; }
+.card.compact ol, .card.compact .take, .card.compact .tldr-label { display: none; }
+.cta { margin-top: auto; padding-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.cta a { text-decoration: none; border-radius: 12px; padding: 8px 16px; font-weight: 700; font-size: 16px; }
+.cta .go { background: var(--c); color: #fff; }
+.cta .go:hover { filter: brightness(1.08); }
+.cta .alt { color: var(--c-acc); border: 1px solid var(--line); background: var(--paper); font-weight: 500; }
+.cta .alt:hover { border-color: var(--c); }
+.read { background: color-mix(in srgb, #3A7D34 14%, var(--paper)); color: #3A7D34; font-weight: 700; font-size: 12.5px; padding: 1px 8px; border-radius: 6px; }
+.playbtn { display: inline-flex; align-items: center; gap: 8px; background: var(--brand); color: var(--on-fill); text-decoration: none; font-weight: 900; font-size: 18px; padding: 12px 22px; border-radius: 14px; box-shadow: var(--shadow); }
+.playbtn:hover { filter: brightness(1.08); }
+.playbtn small { font-weight: 500; opacity: .9; font-size: 14.5px; }
+.hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 0 0 22px; }
 
 /* ===== 主題地圖 ===== */
 .topic-map { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 14px; }
@@ -358,6 +370,8 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 <div class="toast" id="toast"></div>
 
 <script src="data/articles.js"></script>
+<script src="data/slides.js"></script>
+<script src="reader.js"></script>
 <script>
 (function () {
   const TOPICS = window.KB_TOPICS || [];
@@ -398,6 +412,10 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   });
   const sorted = ARTS.slice().sort((a, b) => (b._issue.date || "").localeCompare(a._issue.date || "") || ARTS.indexOf(a) - ARTS.indexOf(b));
 
+  const R = window.KBReader;
+  const PAGES = Object.fromEntries(ARTS.map(a => [a.id, R ? R.pages(a.id) : 0]));
+  let READ = R ? R.readSet() : new Set();
+
   /* ---------- 主題、期數狀態 ---------- */
   const state = { q: "", topic: "", issue: "", view: store.get("kb-view") || "full" };
 
@@ -416,13 +434,13 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   function cardHTML(a, q) {
     const isNew = latest && a.issue === latest.no;
     return `<article class="card ${state.view === "compact" ? "compact" : ""}" style="--c:${color(a)}" tabindex="0" data-id="${a.id}" role="link" aria-label="${esc(a.title)}">
-      <div class="top">${isNew ? '<span class="new">NEW</span>' : ""}<span>第 ${a.issue} 期 · ${fmtDate(a._issue.date)}</span></div>
+      <div class="top">${isNew ? '<span class="new">NEW</span>' : ""}${READ.has(a.id) ? '<span class="read">✓ 已讀</span>' : ""}<span>第 ${a.issue} 期 · ${fmtDate(a._issue.date)}</span></div>
       <div class="top">${a.topics.map(tagHTML).join("")}</div>
       <h3>${hl(a.title, q)}</h3>
       <div class="tldr-label">⏱ 三十秒導讀</div>
       <ol>${a.tldr.map(t => `<li>${hl(t, q)}</li>`).join("")}</ol>
       <div class="take"><b>給師培課程的一句話</b>${hl(a.takeaway, q)}</div>
-      <div class="more">閱讀全文 →</div>
+      <div class="cta"><a class="go" href="#/s/${a.id}">▶ 翻頁閱讀 · ${PAGES[a.id]} 頁</a><a class="alt" href="#/a/${a.id}">📄 全文</a></div>
     </article>`;
   }
 
@@ -434,9 +452,11 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     <section class="hero"><div class="wrap">
       <span class="kick">📰 給大學師培教授的 AI 教育新知</span>
       <h1>AI教育資訊快報</h1>
-      <p class="lead">每則新知先給三十秒導讀與一句課程意涵，想深入再展開全文。依主題累積，隨時回來查。</p>
+      <p class="lead">像翻簡報一樣讀新知：每則先看三個重點，再一頁一頁看圖解，最後用一分鐘小測驗回顧。想深入，隨時切到全文版。</p>
+      ${latest ? `<div class="cta-row"><a class="playbtn" href="#/i/${latest.no}">▶ 翻閱第 ${latest.no} 期快報 <small>${R ? R.issuePages(latest.no) : ""} 頁</small></a></div>` : ""}
       <div class="stats">
         <div class="stat"><b>${ARTS.length}</b>則新知</div>
+        ${READ.size ? `<div class="stat">你已讀 <b>${ARTS.filter(a => READ.has(a.id)).length}</b>則，未讀 <b>${ARTS.filter(a => !READ.has(a.id)).length}</b>則</div>` : ""}
         <div class="stat"><b>${ISSUES.length}</b>期快報</div>
         <div class="stat"><b>${TOPICS.filter(t => ARTS.some(a => a.topics.includes(t.key))).length}</b>個主題</div>
         <div class="stat"><b>${totalRefs}</b>筆出處</div>
@@ -451,6 +471,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         <div class="meta"><span class="no">第 ${latest.no} 期</span><span>${fmtDate(latest.date)}</span></div>
         <h3>${esc(latest.title)}</h3>
         ${latest.intro ? `<p class="intro">${md(latest.intro)}</p>` : ""}
+        <p style="margin:0 0 16px"><a class="playbtn" href="#/i/${latest.no}">▶ 整期翻頁閱讀 <small>${R ? R.issuePages(latest.no) : ""} 頁，含小測驗</small></a></p>
         <div class="feat-grid">${focusArts.map(a => cardHTML(a, "")).join("")}</div>
       </div>
     </div></section>` : ""}
@@ -487,6 +508,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         const list = sorted.filter(a => a.issue === i.no);
         return `<div class="tl-item"><div class="h"><b>第 ${i.no} 期　${esc(i.title)}</b><span>${fmtDate(i.date)}</span></div>
           <ul>${list.map(a => `<li><a href="#/a/${a.id}">${esc(a.title)}</a></li>`).join("")}</ul>
+          <div style="margin:4px 0 6px"><a class="playbtn" style="font-size:15.5px;padding:7px 14px" href="#/i/${i.no}">▶ 翻閱這一期</a></div>
           ${i.legacy ? `<div class="legacy">原始版本：<a href="${esc(i.legacy)}" target="_blank" rel="noopener">Gemini 快報頁</a></div>` : ""}</div>`;
       }).join("")}</div>
     </div></section>`;
@@ -540,11 +562,11 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   /* 卡片點擊（委派） */
   app.addEventListener("click", e => {
     const card = e.target.closest(".card");
-    if (card && !e.target.closest("a")) location.hash = "#/a/" + card.dataset.id;
+    if (card && !e.target.closest("a")) location.hash = "#/s/" + card.dataset.id;
   });
   app.addEventListener("keydown", e => {
     const card = e.target.closest && e.target.closest(".card");
-    if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); location.hash = "#/a/" + card.dataset.id; }
+    if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); location.hash = "#/s/" + card.dataset.id; }
   });
 
   /* ---------- 文章內容區塊 ---------- */
@@ -608,7 +630,8 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         <div class="panel"><h2>⏱ 三十秒導讀</h2><ol>${a.tldr.map(t => `<li>${md(t)}</li>`).join("")}</ol></div>
         <div class="panel take2"><h2>🎓 給師培課程的一句話</h2><p>${md(a.takeaway)}</p>
           <div class="actions">
-            ${a.fulltext ? `<a class="btn primary" href="${esc(a.fulltext.url)}" target="_blank" rel="noopener">${esc(a.fulltext.label)} ↗</a>` : ""}
+            <a class="btn primary" href="#/s/${a.id}">▶ 用翻頁模式看</a>
+            ${a.fulltext ? `<a class="btn" href="${esc(a.fulltext.url)}" target="_blank" rel="noopener">${esc(a.fulltext.label)} ↗</a>` : ""}
             <button class="btn" type="button" id="copyLink">🔗 複製這則連結</button>
           </div>
         </div>
@@ -636,7 +659,11 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   /* ---------- 路由 ---------- */
   function route() {
     const h = location.hash.replace(/^#\/?/, "");
-    const [kind, val] = h.split("/");
+    const [kind, val, pg] = h.split("/");
+    if (kind === "s" && R && R.openArticle(decodeURIComponent(val), +pg || 1)) { if (!app.innerHTML) renderHome(); return; }
+    if (kind === "i" && R && R.openIssue(val, +pg || 1)) { if (!app.innerHTML) renderHome(); return; }
+    if (R) R.close();
+    READ = R ? R.readSet() : new Set();
     if (kind !== "a") document.title = "AI教育資訊快報";
     if (kind === "a" && val) return renderArticle(decodeURIComponent(val));
     if (kind === "topic") { state.topic = val || ""; state.issue = ""; state.q = ""; return renderHome("all"); }
