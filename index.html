@@ -273,7 +273,7 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 .rail { position: fixed; left: 16px; top: 50%; translate: 0 -50%; z-index: 40; display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
 .rail a, .rail button { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px; width: 52px; padding: 7px 0 6px; border-radius: 14px; border: 0; background: none; color: var(--ink); text-decoration: none; cursor: pointer; font: inherit; }
 .rail span { font-size: 20px; line-height: 1.1; }
-.rail em { font-style: normal; font-size: 11.5px; color: var(--mute); font-weight: 700; letter-spacing: .04em; }
+.rail em { font-style: normal; text-align: center; line-height: 1.25; font-size: 11.5px; color: var(--mute); font-weight: 700; letter-spacing: .04em; }
 .rail a:hover, .rail button:hover { background: color-mix(in srgb, var(--brand) 10%, var(--paper)); }
 .rail a:hover em, .rail button:hover em { color: var(--brand); }
 .rail .sep { display: block; height: 1px; margin: 4px 8px; background: var(--line); }
@@ -577,7 +577,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 <aside class="rail" aria-label="網站工具列">
   <a href="#/" data-jump="top" data-tip="回到首頁"><span>🏠</span><em>首頁</em></a>
   <a href="#/" data-jump="latest" data-tip="最新"><span>🆕</span><em>最新</em></a>
-  <a href="#/" data-jump="features" data-tip="互動專題"><span>🧩</span><em>專題</em></a>
+  <a href="#/" data-jump="features" data-tip="互動專題：AI 誠信與撤稿機制"><span>⚖️</span><em>AI誠信<br>撤稿</em></a>
   <a href="#/" data-jump="all" data-tip="全部新知"><span>📚</span><em>全部</em></a>
   <a href="#/" data-jump="issues" data-tip="快報合輯"><span>🗂️</span><em>合輯</em></a>
   <i class="sep"></i>
@@ -761,7 +761,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
       </div>
       <p class="hero-copy">© 2026 陳佩英教授計畫團隊・數位科技轉化大學師培課程培訓計畫</p>
       <div class="hero3d" id="hero3d" aria-hidden="true"><div class="orb-fallback"></div></div>
-      <div class="hero-figure"><img class="hero-art" src="assets/mascot-community.webp" alt="計畫主視覺：吉祥物捧著師資培育 AI 魔法球，與教授、教師、學生共學" width="1536" height="1024" fetchpriority="high"><span class="orb-logo" aria-hidden="true"><img src="assets/logo-icon.png" alt=""></span></div>
+      <div class="hero-figure"><img class="hero-art" src="assets/mascot-community.webp" alt="計畫主視覺：吉祥物與教授、教師、學生共學" width="1536" height="1024" fetchpriority="high"></div>
     </div>
     <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,30 C240,60 480,0 720,22 C960,44 1200,12 1440,30 L1440,60 L0,60 Z"/></svg>
     </section>
@@ -772,7 +772,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     </div></section>
 
     ${FEATS.length ? `<section class="block reveal" id="features"><div class="wrap">
-      <div class="sec-h"><h2>互動專題</h2><span class="sub">完整的互動講義，直接在這裡打開</span></div>
+      <div class="sec-h"><h2>互動專題</h2><span class="sub">研究倫理與出版規範：AI 誠信與撤稿機制</span></div>
       ${FEATS.map(f => `<a class="featcard tilt" href="#/x/${f.id}" style="--c:${f.color}">
         <div class="device"><div class="screen">${f.preview ? `<img class="shot" src="${esc(f.preview)}" alt="${esc(f.title)} 預覽" loading="lazy">` : `<span class="ph">${f.emoji}</span>`}</div></div>
         <div class="fc-text">
