@@ -273,3 +273,10 @@ body.reading { overflow: hidden; }
 .sl[data-score] .score { font-size: 130px; }
 .sl[data-score] .sbody { gap: 18px !important; }
 .sl[data-score] .nextcard { padding: 14px 24px; }
+
+/* 結尾頁吉祥物 */
+.sl .endmascot { position: absolute; right: 70px; top: 30px; width: 230px; height: auto; z-index: 0; filter: drop-shadow(0 12px 20px rgba(0,0,0,.15)); animation: decoBob 6s ease-in-out infinite; }
+.sl[data-score] h2 { padding-right: 260px; }
+.portrait .sl .endmascot { width: 150px; right: 30px; top: 24px; }
+.portrait .sl[data-score] h2 { padding-right: 160px; }
+@media (prefers-reduced-motion: reduce) { .sl .endmascot { animation: none; } }

@@ -11,6 +11,7 @@ window.KB_FEATURES = [
     emoji: "⚖️",
     color: "#0E7C74",
     desc: "從英國 UKRIO、出版倫理委員會 COPE，到國科會、學術倫理教育資源中心與臺師大，一步步看懂 AI 時代的研究誠信與撤稿機制。",
-    url: "https://songping90.github.io/research-ethics-ai-integrity/"
+    url: "https://songping90.github.io/research-ethics-ai-integrity/",
+    preview: "assets/ethics-preview.jpg"
   }
 ];
