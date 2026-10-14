@@ -134,7 +134,6 @@
   }
   function endSlide(c, next, label, cite) {
     return slide(c, `
-      <img class="endmascot" src="assets/mascot-tablet.png" alt="" aria-hidden="true">
       <span class="kick">🏁 讀完了</span>
       <h2>${esc(label)}</h2>
       <div class="sbody" style="gap:28px">
@@ -146,7 +145,7 @@
         </div>
         ${next ? `<a class="nextcard" href="${next.href}"><small>${esc(next.kick)} →</small><b>${esc(next.title)}</b></a>` : ""}
         ${cite ? `<div class="citebox"><b>📎 引用本則</b><span>${esc(cite)}</span><button class="abtn sm" type="button" data-cite="${esc(cite)}">複製引用</button></div>` : ""}
-      </div>`, { score: true, sec: true });
+      </div>`, { deco: "🏁", score: true, sec: true });
   }
 
   /* ---------- 組 deck ---------- */
