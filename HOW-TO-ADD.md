@@ -6,6 +6,9 @@
 - `data/slides.js`：每則新知的翻頁簡報內容頁與小測驗。
 - `data/posts.js`：GEL-net 文章做成的新知（2026-10-14 起的做法），由 `_來源/drafts/<id>.js` 串接而成，請勿直接改。
 - `data/merge.js`：把 posts.js 併入主資料（同 id 取代舊條目）。
+- `data/features.js`：首頁「互動專題」清單（以 iframe 鑲嵌的獨立互動講義，例如研究倫理講義）。新增專題＝加一筆 { id, title, sub, tag, emoji, color, desc, url }。
+- `assets/`：文章用到的圖片（例：AI-GO 架構圖）。投影片與全文版都可用 `img: { src, alt, cap }` 放圖。
+- 選填欄位 `from`：本則摘自哪篇文章的哪一節，會顯示在封面與全文版。
 
 ## 2026-10-14 起的標準流程（GEL-net 文章）
 1. `python3 -I _來源/fetch_gelnet.py _來源/gelnet`（先在檔內 URLS 加上新網址）抓全文；作者與日期以文末 APA 引用行為準。

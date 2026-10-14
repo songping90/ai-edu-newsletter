@@ -234,6 +234,71 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 .arow { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); flex-wrap: wrap; }
 .arow small { color: var(--mute); margin-left: 10px; font-size: 14px; }
 
+/* ===== 首頁 3D 球體 ===== */
+.hero { min-height: 470px; }
+.hero::before { display: none; }
+.hero3d { position: absolute; right: max(0px, calc((100vw - 1180px) / 2 - 40px)); top: 50%; translate: 0 -50%; width: min(470px, 42vw); aspect-ratio: 1; pointer-events: none; z-index: 0; }
+.hero3d canvas { width: 100% !important; height: 100% !important; display: block; }
+.hero3d .orb-fallback { position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff 0 4%, color-mix(in srgb, var(--brand) 40%, #fff) 18%, var(--brand) 60%, color-mix(in srgb, var(--brand) 60%, #000) 100%); opacity: .25; filter: blur(.5px); animation: orbPulse 6s ease-in-out infinite; }
+.hero3d.live .orb-fallback { display: none; }
+@keyframes orbPulse { 0%, 100% { scale: 1; } 50% { scale: 1.06; } }
+.hero .wrap { position: relative; }
+.hero .wrap > *:not(.hero3d) { position: relative; z-index: 1; }
+@media (max-width: 760px) { .hero3d { width: 78vw; right: -22vw; top: 40%; opacity: .55; } }
+
+/* ===== 進場動畫 ===== */
+.reveal, .btile, .tile { opacity: 0; translate: 0 18px; transition: opacity .6s ease var(--d, 0ms), translate .6s ease var(--d, 0ms), transform .2s, box-shadow .2s; }
+.reveal.in, .btile.in, .tile.in { opacity: 1; translate: 0 0; }
+.btile .band .em { animation: emFloat 5s ease-in-out infinite; }
+.btile:nth-child(2) .band .em { animation-delay: -1.6s; } .btile:nth-child(3) .band .em { animation-delay: -3.2s; }
+@keyframes emFloat { 0%, 100% { translate: 0 0; rotate: -6deg; } 50% { translate: 0 -10px; rotate: 4deg; } }
+.btile, .featcard { transform-style: preserve-3d; will-change: transform; }
+
+/* ===== 互動專題卡 ===== */
+.featcard { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 30px; align-items: center; text-decoration: none; color: var(--ink); background: linear-gradient(135deg, var(--c-soft), var(--paper) 60%); border-radius: 26px; padding: 28px; box-shadow: var(--shadow); border-top: 8px solid var(--c); transition: transform .2s, box-shadow .2s; }
+.featcard:hover { box-shadow: var(--shadow-hi); }
+.featcard .device { background: #1d2430; border-radius: 22px; padding: 12px; box-shadow: 0 24px 50px rgba(0,0,0,.28), inset 0 0 0 2px rgba(255,255,255,.06); transform: perspective(1100px) rotateY(10deg) rotateX(4deg); transition: transform .4s; }
+.featcard:hover .device { transform: perspective(1100px) rotateY(2deg) rotateX(1deg); }
+.featcard .screen { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: var(--c-soft); display: grid; place-items: center; }
+.featcard .screen .ph { font-size: 64px; }
+.featcard .screen iframe { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; border: 0; transform-origin: 0 0; pointer-events: none; background: #fff; }
+.featcard .fc-tag { display: inline-block; background: var(--c); color: #fff; font-weight: 700; font-size: 13.5px; padding: 3px 12px; border-radius: 999px; }
+.featcard h3 { margin: 12px 0 8px; font-size: 26px; line-height: 1.35; color: var(--title); }
+.featcard h3 small { display: block; font-size: 19px; color: var(--c-acc); font-weight: 700; }
+.featcard p { margin: 0 0 14px; font-size: 16.5px; color: var(--ink); line-height: 1.7; }
+.featcard .go { display: inline-flex; background: var(--c); color: #fff; font-weight: 900; padding: 10px 20px; border-radius: 14px; font-size: 16.5px; }
+@media (max-width: 820px) { .featcard { grid-template-columns: 1fr; padding: 18px; } .featcard .device { transform: none; } }
+
+/* ===== 互動專題全螢幕 ===== */
+.featov { position: fixed; inset: 0; z-index: 120; background: var(--ground); display: flex; flex-direction: column; }
+.featov[hidden] { display: none; }
+.fo-top { display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.fo-title { margin-right: auto; font-weight: 900; color: var(--title); font-size: 15.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.featov iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+
+/* ===== 版權與引用聲明 ===== */
+.copycard { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 10%, var(--paper)), var(--paper)); border: 2px solid color-mix(in srgb, var(--brand) 30%, var(--line)); border-radius: 24px; padding: 26px 30px; box-shadow: var(--shadow); }
+.copycard .cc-badge { width: 72px; height: 72px; border-radius: 22px; background: var(--brand); color: var(--on-fill); font-size: 40px; font-weight: 900; display: grid; place-items: center; box-shadow: 0 10px 24px color-mix(in srgb, var(--brand) 35%, transparent); }
+.copycard h2 { margin: 0 0 8px; font-size: 24px; color: var(--title); }
+.copycard p { margin: 0 0 14px; font-size: 16.5px; line-height: 1.8; }
+.copycard strong { color: var(--brand); }
+.cc-cite { display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; background: var(--paper); border: 1px dashed var(--line); border-radius: 14px; padding: 10px 14px; font-size: 15px; }
+.cc-cite b { color: var(--brand); }
+.cc-cite span { flex: 1 1 320px; word-break: break-all; }
+@media (max-width: 640px) { .copycard { grid-template-columns: 1fr; padding: 20px 18px; } .copycard .cc-badge { width: 56px; height: 56px; font-size: 30px; } }
+footer .foot-brand { font-weight: 900; color: var(--title); font-size: 15.5px; }
+footer .foot-note { margin-top: 4px; }
+
+/* 全文版圖片 */
+.bfig { margin: 20px 0; text-align: center; }
+.bfig img { max-width: 100%; border-radius: 14px; box-shadow: var(--shadow); background: #fff; }
+.bfig figcaption { font-size: 14.5px; color: var(--mute); margin-top: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .btile, .tile { opacity: 1; translate: none; transition: none; }
+  .btile .band .em, .hero3d .orb-fallback { animation: none; }
+}
+
 /* ===== 歷期 ===== */
 .timeline { position: relative; padding-left: 30px; }
 .timeline::before { content: ""; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 3px; background: var(--line); border-radius: 2px; }
@@ -400,8 +465,19 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 <main id="app"></main>
 
 <footer>
-  <div class="wrap">©陳佩英教授計畫團隊　·　數位科技轉化大學師培課程培訓計畫　·　內容持續更新</div>
+  <div class="wrap">
+    <div class="foot-brand">© 2026 陳佩英教授計畫團隊・數位科技轉化大學師培課程培訓計畫</div>
+    <div class="foot-note">本站內容著作權屬計畫團隊所有。歡迎教學與研究引用，引用時請註明出處；轉載或改作請先徵得計畫團隊同意。</div>
+  </div>
 </footer>
+<div class="featov" id="featov" hidden>
+  <div class="fo-top">
+    <button class="rbtn" type="button" id="foClose">✕ 關閉</button>
+    <div class="fo-title" id="foTitle"></div>
+    <a class="rbtn" id="foNew" href="#" target="_blank" rel="noopener">↗ 新分頁開啟</a>
+  </div>
+  <iframe id="foFrame" title="互動專題" allow="fullscreen" allowfullscreen></iframe>
+</div>
 <button class="totop" id="totop" type="button" aria-label="回到最上方">↑</button>
 <div class="toast" id="toast"></div>
 
@@ -409,6 +485,8 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 <script src="data/slides.js"></script>
 <script src="data/posts.js"></script>
 <script src="data/merge.js"></script>
+<script src="data/features.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script src="reader.js"></script>
 <script>
 (function () {
@@ -452,6 +530,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   const sorted = ARTS.slice().sort((a, b) => (b._date || "").localeCompare(a._date || "") || ARTS.indexOf(a) - ARTS.indexOf(b));
   const NEWEST = new Set(sorted.slice(0, 3).map(a => a.id));
 
+  const FEATS = window.KB_FEATURES || [];
   const R = window.KBReader;
   const PAGES = Object.fromEntries(ARTS.map(a => [a.id, R ? R.pages(a.id) : 0]));
   const mins = a => Math.max(2, Math.round((PAGES[a.id] || 6) * 0.35));
@@ -509,7 +588,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         <a class="ghostbtn" href="#/" data-jump="all">瀏覽全部 ↓</a>
       </div>
       <p class="tiny">共 ${ARTS.length} 則 · 最近更新 ${fmtDate(sorted[0] ? sorted[0]._date : "")}${READ.size ? ` · 還有 ${unread} 則未讀` : ""}</p>
-      <div class="deco">🧭</div>
+      <div class="hero3d" id="hero3d" aria-hidden="true"><div class="orb-fallback"></div></div>
     </div></section>
 
     <section class="block" id="latest"><div class="wrap">
@@ -517,7 +596,19 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
       <div class="btiles">${sorted.slice(0, 3).map(bigTile).join("")}</div>
     </div></section>
 
-    <section class="block" id="all"><div class="wrap">
+    ${FEATS.length ? `<section class="block reveal" id="features"><div class="wrap">
+      <div class="sec-h"><h2>互動專題</h2><span class="sub">完整的互動講義，直接在這裡打開</span></div>
+      ${FEATS.map(f => `<a class="featcard tilt" href="#/x/${f.id}" style="--c:${f.color}">
+        <div class="device"><div class="screen" data-src="${esc(f.url)}"><span class="ph">${f.emoji}</span></div></div>
+        <div class="fc-text">
+          <span class="fc-tag">${esc(f.tag)}</span>
+          <h3>${esc(f.title)}<small>${esc(f.sub)}</small></h3>
+          <p>${esc(f.desc)}</p>
+          <span class="go">▶ 開啟互動講義</span>
+        </div></a>`).join("")}
+    </div></section>` : ""}
+
+    <section class="block reveal" id="all"><div class="wrap">
       <div class="sec-h"><h2>全部新知</h2>
         <button class="iconbtn searchbtn" id="searchBtn" type="button" aria-label="搜尋">🔍 搜尋</button></div>
       <div class="searchrow" id="searchRow" ${state.searchOpen || state.q ? "" : "hidden"}>
@@ -529,6 +620,17 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
       </div>
       <div class="active-filter" id="af"></div>
       <div class="tiles" id="grid"></div>
+    </div></section>
+
+    <section class="block reveal" id="copyright"><div class="wrap">
+      <div class="copycard">
+        <div class="cc-badge">©</div>
+        <div class="cc-body">
+          <h2>版權與引用聲明</h2>
+          <p>本網站所有內容（文字、圖表、簡報與互動講義）之著作權，屬<strong>陳佩英教授計畫團隊・數位科技轉化大學師培課程培訓計畫</strong>所有。歡迎教學與研究引用，引用時請註明出處；轉載或改作請先徵得計畫團隊同意。各則新知改寫自「教育新知國際串聯」（GEL-net）原文，原文著作權屬各篇作者。</p>
+          <div class="cc-cite"><b>引用本站</b><span id="siteCite">陳佩英教授計畫團隊（2026）。AI教育資訊快報。數位科技轉化大學師培課程培訓計畫。https://songping90.github.io/ai-edu-newsletter/</span><button class="btn" type="button" id="copySite">複製引用</button></div>
+        </div>
+      </div>
     </div></section>
 
     ${ISSUES.length ? `<section class="block" id="issues"><div class="wrap">
@@ -567,6 +669,9 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   }
 
   function bindHome() {
+    const cs = document.getElementById("copySite");
+    if (cs) cs.onclick = () => copyText(document.getElementById("siteCite").textContent, "已複製本站引用格式");
+    initHero3D(); initTilt(); initReveal(); initPreviews();
     document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; renderGrid(); });
     document.getElementById("searchBtn").addEventListener("click", () => {
       const row = document.getElementById("searchRow");
@@ -625,6 +730,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         ${d.groups.map(g => `<h4>${esc(g.face)}</h4>${g.clusters.map(c => `<h5>集群：${esc(c.name)}</h5>${c.items.map(it => `<div class="ind"><div>${esc(it[0])}</div><div>${md(it[1])}</div></div>`).join("")}`).join("")}`).join("")}
       </div></details>`;
     }
+    if (b.img) return `<figure class="bfig"><img src="${esc(b.img.src)}" alt="${esc(b.img.alt || "")}" loading="lazy">${b.img.cap ? `<figcaption>${esc(b.img.cap)}</figcaption>` : ""}</figure>`;
     if (b.related) {
       const r = ARTS.find(a => a.id === b.related);
       return r ? `<div class="related">🔗 延伸對照：<a href="#/a/${r.id}">${esc(r.title)}</a></div>` : "";
@@ -645,7 +751,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         <span class="deco">${deco(a)}</span>
         <div class="top" style="display:flex;gap:8px;flex-wrap:wrap">${a.topics.map(k => `<a class="tag" style="--c:${T[k] ? T[k].color : ""}" href="#/topic/${k}">${T[k] ? T[k].emoji + " " + esc(T[k].name) : k}</a>`).join("")}</div>
         <h1>${esc(a.title)}</h1>
-        <div class="meta"><span>📅 ${fmtDate(a._date)}</span>${a._issue ? `<span>📚 收錄於第 ${a.issue} 期快報</span>` : ""}${a.authors ? `<span>✍️ ${esc(a.authors)}</span>` : ""}</div>
+        <div class="meta"><span>📅 ${fmtDate(a._date)}</span>${a._issue ? `<span>📚 收錄於第 ${a.issue} 期快報</span>` : ""}${a.authors ? `<span>✍️ ${esc(a.authors)}</span>` : ""}${a.from ? `<span>📄 ${esc(a.from)}</span>` : ""}</div>
       </div>
 
       <div class="quick">
@@ -655,6 +761,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
             <a class="btn primary" href="#/s/${a.id}">▶ 用翻頁模式看</a>
             ${a.fulltext ? `<a class="btn" href="${esc(a.fulltext.url)}" target="_blank" rel="noopener">${esc(a.fulltext.label)} ↗</a>` : ""}
             <button class="btn" type="button" id="copyLink">🔗 複製這則連結</button>
+            <button class="btn" type="button" id="copyCite">📎 引用本則</button>
           </div>
         </div>
       </div>
@@ -670,6 +777,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         ${next ? `<a class="nx" href="#/a/${next.id}"><small>較早一則 →</small><b>${esc(next.title)}</b></a>` : ""}
       </div>
     </div></div>`;
+    document.getElementById("copyCite").onclick = () => copyText(R ? R.cite(a.id) : a.title, "已複製引用格式");
     document.getElementById("copyLink").onclick = () => {
       const url = location.href;
       (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => toast("已複製連結，可以貼給同事"), () => toast(url));
@@ -678,12 +786,140 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   }
   function decodeURIComponentSafe(u) { try { return decodeURI(u); } catch (e) { return u; } }
 
+  /* ---------- 複製 ---------- */
+  function copyText(t, ok) {
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast(ok), () => toast(t));
+  }
+
+  /* ---------- 互動專題（iframe 全螢幕） ---------- */
+  const fo = document.getElementById("featov");
+  function openFeature(id) {
+    const f = FEATS.find(x => x.id === id); if (!f) return false;
+    document.getElementById("foTitle").textContent = f.title + "｜" + f.sub;
+    document.getElementById("foNew").href = f.url;
+    const fr = document.getElementById("foFrame");
+    if (fr.getAttribute("src") !== f.url) fr.setAttribute("src", f.url);
+    fo.hidden = false; document.body.classList.add("reading");
+    setTimeout(() => { try { fr.focus(); } catch (e) {} }, 300);
+    return true;
+  }
+  function closeFeature() { if (!fo.hidden) { fo.hidden = true; document.body.classList.remove("reading"); } }
+  document.getElementById("foClose").onclick = () => { closeFeature(); location.hash = "#/"; };
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !fo.hidden) { closeFeature(); location.hash = "#/"; } });
+
+  /* ---------- 動態效果 ---------- */
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function initTilt() {
+    if (reduceMotion || matchMedia("(hover: none)").matches) return;
+    document.querySelectorAll(".tilt, .btile").forEach(el => {
+      el.addEventListener("pointermove", e => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        el.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
+      });
+      el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+    });
+  }
+  function initReveal() {
+    const els = document.querySelectorAll(".reveal, .btile, .tile");
+    if (reduceMotion || !("IntersectionObserver" in window)) { els.forEach(e => e.classList.add("in")); return; }
+    const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { threshold: .08 });
+    els.forEach((e, i) => { e.style.setProperty("--d", (i % 6) * 60 + "ms"); io.observe(e); });
+  }
+  function initPreviews() {
+    document.querySelectorAll(".screen[data-src]").forEach(sc => {
+      const load = () => {
+        if (sc.querySelector("iframe")) return;
+        const fr = document.createElement("iframe");
+        fr.src = sc.dataset.src; fr.title = "預覽"; fr.loading = "lazy"; fr.tabIndex = -1; fr.setAttribute("aria-hidden", "true");
+        sc.appendChild(fr);
+        const fit = () => { const k = sc.clientWidth / 1280; fr.style.transform = `scale(${k})`; };
+        fit(); window.addEventListener("resize", fit);
+      };
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { load(); io.disconnect(); } }, { rootMargin: "200px" });
+        io.observe(sc);
+      } else load();
+    });
+  }
+
+  /* 首頁 3D：知識網絡球體（three.js；載入失敗時顯示 CSS 光球） */
+  let h3 = null;
+  function initHero3D() {
+    if (h3) { cancelAnimationFrame(h3.raf); h3.renderer.dispose(); h3 = null; }
+    const host = document.getElementById("hero3d");
+    if (!host) return;
+    if (!window.THREE) { if (!initHero3D._wait) { initHero3D._wait = true; window.addEventListener("load", () => { initHero3D._wait = false; if (document.getElementById("hero3d")) initHero3D(); }); } return; }
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { return; }
+    const THREE_ = THREE;
+    const css = getComputedStyle(document.documentElement);
+    const brand = new THREE_.Color(css.getPropertyValue("--brand").trim() || "#2F6DB5");
+    const palette = TOPICS.map(t => new THREE_.Color(t.color));
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    host.appendChild(renderer.domElement); host.classList.add("live");
+    const scene = new THREE_.Scene();
+    const cam = new THREE_.PerspectiveCamera(42, 1, .1, 100); cam.position.set(0, 0, 7.4);
+    const g = new THREE_.Group(); scene.add(g);
+    // 外框多面體
+    const ico = new THREE_.IcosahedronGeometry(1.75, 1);
+    g.add(new THREE_.LineSegments(new THREE_.EdgesGeometry(ico), new THREE_.LineBasicMaterial({ color: brand, transparent: true, opacity: .28 })));
+    // 球面節點（費氏分布）＋鄰近連線
+    const N = 110, R = 1.75, pts = [], cols = [];
+    for (let i = 0; i < N; i++) {
+      const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = Math.PI * (3 - Math.sqrt(5)) * i;
+      const v = new THREE_.Vector3(Math.cos(th) * r * R, y * R, Math.sin(th) * r * R); pts.push(v);
+      const c = palette[i % palette.length] || brand; cols.push(c.r, c.g, c.b);
+    }
+    const pg = new THREE_.BufferGeometry().setFromPoints(pts);
+    pg.setAttribute("color", new THREE_.Float32BufferAttribute(cols, 3));
+    const dot = document.createElement("canvas"); dot.width = dot.height = 64;
+    const dc = dot.getContext("2d"), grd = dc.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grd.addColorStop(0, "rgba(255,255,255,1)"); grd.addColorStop(.45, "rgba(255,255,255,.9)"); grd.addColorStop(1, "rgba(255,255,255,0)");
+    dc.fillStyle = grd; dc.fillRect(0, 0, 64, 64);
+    g.add(new THREE_.Points(pg, new THREE_.PointsMaterial({ size: .16, vertexColors: true, transparent: true, opacity: .95, map: new THREE_.CanvasTexture(dot), depthWrite: false })));
+    const seg = [];
+    for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) if (pts[i].distanceTo(pts[j]) < .62) seg.push(pts[i], pts[j]);
+    g.add(new THREE_.LineSegments(new THREE_.BufferGeometry().setFromPoints(seg), new THREE_.LineBasicMaterial({ color: brand, transparent: true, opacity: .16 })));
+    // 內核光球
+    g.add(new THREE_.Mesh(new THREE_.SphereGeometry(1.05, 32, 32), new THREE_.MeshBasicMaterial({ color: brand, transparent: true, opacity: .07 })));
+    // 三條軌道與衛星（主題色）
+    const sats = [];
+    [[1.2, .3, 0], [-.5, 1.1, .4], [.2, -.6, 1.3]].forEach((rot, k) => {
+      const orbit = new THREE_.Group(); orbit.rotation.set(rot[0], rot[1], rot[2]); scene.add(orbit);
+      const rr = 2.35 + k * .22;
+      orbit.add(new THREE_.Mesh(new THREE_.TorusGeometry(rr, .006, 6, 160), new THREE_.MeshBasicMaterial({ color: brand, transparent: true, opacity: .25 })));
+      const sat = new THREE_.Mesh(new THREE_.SphereGeometry(.11, 20, 20), new THREE_.MeshBasicMaterial({ color: palette[(k * 2) % palette.length] || brand }));
+      orbit.add(sat); sats.push({ sat, rr, sp: .35 + k * .12, ph: k * 2 });
+    });
+    let mx = 0, my = 0;
+    const onMove = e => { mx = (e.clientX / innerWidth - .5); my = (e.clientY / innerHeight - .5); };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    const size = () => { const w = host.clientWidth, h = host.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+    size(); window.addEventListener("resize", size);
+    let visible = true;
+    const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; }); io.observe(host);
+    const t0 = performance.now();
+    h3 = { renderer, raf: 0 };
+    const tick = () => {
+      h3.raf = requestAnimationFrame(tick);
+      if (!visible || document.hidden) return;
+      const t = (performance.now() - t0) / 1000;
+      g.rotation.y = t * .16 + mx * .6; g.rotation.x = Math.sin(t * .2) * .12 + my * .4;
+      sats.forEach(o => { const a = t * o.sp + o.ph; o.sat.position.set(Math.cos(a) * o.rr, Math.sin(a) * o.rr, 0); });
+      renderer.render(scene, cam);
+    };
+    if (reduceMotion) { renderer.render(scene, cam); } else tick();
+  }
+
   /* ---------- 路由 ---------- */
   function route() {
     const h = location.hash.replace(/^#\/?/, "");
     const [kind, val, pg] = h.split("/");
     if (kind === "s" && R && R.openArticle(decodeURIComponent(val), +pg || 1)) { if (!app.innerHTML) renderHome(); return; }
     if (kind === "i" && R && R.openIssue(val, +pg || 1)) { if (!app.innerHTML) renderHome(); return; }
+    if (kind === "x" && openFeature(val)) { if (!app.innerHTML) renderHome(); return; }
+    closeFeature();
     if (R) R.close();
     READ = R ? R.readSet() : new Set();
     if (kind !== "a") document.title = "AI教育資訊快報";

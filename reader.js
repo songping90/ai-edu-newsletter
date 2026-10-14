@@ -28,6 +28,12 @@
   /* ---------- 版面元件 ---------- */
   function partsHTML(s) {
     let h = "";
+    if (s.img && !s._side) {
+      const side = Object.assign({}, s, { img: null, _side: true });
+      const rest = partsHTML(side);
+      const fig = `<figure class="sfig"><img src="${esc(s.img.src)}" alt="${esc(s.img.alt || "")}" loading="lazy">${s.img.cap ? `<figcaption>${esc(s.img.cap)}</figcaption>` : ""}</figure>`;
+      return rest ? `<div class="imgrow">${fig}<div class="imgside">${rest}</div></div>` : fig;
+    }
     if (s.lead) h += `<p class="lead">${md(s.lead)}</p>`;
     if (s.word) h += `<div class="word">${esc(s.word)}</div>`;
     if (s.stats) h += `<div class="stats">${s.stats.map(x => `<div class="stat"><div class="num">${esc(x.n)}<small>${esc(x.u || "")}</small></div><div class="lab">${esc(x.l)}</div>${x.s ? `<div class="sub">${esc(x.s)}</div>` : ""}</div>`).join("")}</div>`;
@@ -56,7 +62,7 @@
 
   function slide(c, inner, opt) {
     opt = opt || {};
-    return `<section class="sl ${opt.cls || ""}" style="--c:${c}" ${opt.deco ? `data-deco="${esc(opt.deco)}"` : ""} ${opt.sec ? `data-sec="1"` : ""} ${opt.read ? `data-read="${opt.read}"` : ""} ${opt.score ? `data-score="1"` : ""}><div class="sin">${inner}</div>${opt.cls && opt.cls.includes("divider") ? "" : '<i class="dotrow"></i>'}</section>`;
+    return `<section class="sl ${opt.cls || ""}" style="--c:${c}" ${opt.deco ? `data-deco="${esc(opt.deco)}"` : ""} ${opt.sec ? `data-sec="1"` : ""} ${opt.read ? `data-read="${opt.read}"` : ""} ${opt.score ? `data-score="1"` : ""}><div class="sin">${inner}</div>${opt.cls && opt.cls.includes("divider") ? "" : '<i class="dotrow"></i>'}${opt.cls && opt.cls.includes("cover") ? '<div class="floaters" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>' : ""}<span class="slcopy">© 陳佩英教授計畫團隊・數位科技轉化大學師培課程培訓計畫</span></section>`;
   }
 
   function topicLine(a) { return a.topics.map(k => T[k] ? T[k].emoji + " " + T[k].name : "").join("　"); }
@@ -69,6 +75,7 @@
         <h1>${esc(a.title)}</h1>
         <div class="sub">${esc(topicLine(a))}</div>
         <div class="meta"><span>📅 <b>${fmt(dateOf(a))}</b></span>${a.authors ? `<span>✍️ <b>${esc(a.authors)}</b></span>` : ""}</div>
+        ${a.from ? `<div class="meta"><span>📄 ${esc(a.from)}</span></div>` : ""}
       </div>
       <p class="src" style="padding-left:0">按 → 或空白鍵翻頁，手機可左右滑動</p>`, { cls: "cover", deco: emojiOf(a), sec: true });
   }
@@ -119,7 +126,13 @@
       <p class="qnote">測驗題為依內容自擬，用來幫助回顧。</p>`, { deco: "✅", sec: i === 0 }));
   }
 
-  function endSlide(c, next, label) {
+  function citeOf(a) {
+    const r = (a.refs || [])[0];
+    if (a.fulltext && /GEL-net/.test(a.fulltext.label) && r) return r.t + (r.url ? " " + decodeURI(r.url) : "");
+    const d = dateOf(a).split("-");
+    return `陳佩英教授計畫團隊（${d[0]}年${+d[1]}月${+d[2]}日）。${a.title}。AI教育資訊快報，數位科技轉化大學師培課程培訓計畫。https://songping90.github.io/ai-edu-newsletter/#/a/${a.id}`;
+  }
+  function endSlide(c, next, label, cite) {
     return slide(c, `
       <span class="kick">🏁 讀完了</span>
       <h2>${esc(label)}</h2>
@@ -131,6 +144,7 @@
           <a class="abtn" href="#/" data-close="1">🏠 回首頁</a>
         </div>
         ${next ? `<a class="nextcard" href="${next.href}"><small>${esc(next.kick)} →</small><b>${esc(next.title)}</b></a>` : ""}
+        ${cite ? `<div class="citebox"><b>📎 引用本則</b><span>${esc(cite)}</span><button class="abtn sm" type="button" data-cite="${esc(cite)}">複製引用</button></div>` : ""}
       </div>`, { deco: "🏁", score: true, sec: true });
   }
 
@@ -144,7 +158,7 @@
     const order = sortedArts(); const nx = order[order.indexOf(a) + 1];
     const quiz = quizOf(a);
     const html = [coverSlide(a), tldrSlide(a), ...contentSlides(a), takeawaySlide(a), ...quizSlides(quiz, colorOf(a)),
-      endSlide(colorOf(a), nx ? { href: "#/s/" + nx.id, kick: "下一則", title: nx.title } : null, a.title)];
+      endSlide(colorOf(a), nx ? { href: "#/s/" + nx.id, kick: "下一則", title: nx.title } : null, a.title, citeOf(a))];
     return { title: a.title, color: colorOf(a), html, quiz, fullHref: "#/a/" + a.id, base: "#/s/" + a.id };
   }
 
@@ -216,7 +230,9 @@
   }
 
   function go(i, push) {
-    cur = Math.max(0, Math.min(slides.length - 1, i));
+    const nxt = Math.max(0, Math.min(slides.length - 1, i));
+    deckEl.classList.toggle("back", nxt < cur);
+    cur = nxt;
     slides.forEach((s, k) => s.classList.toggle("on", k === cur));
     const sec = slides[cur];
     root.style.setProperty("--c", sec.style.getPropertyValue("--c"));
@@ -224,9 +240,9 @@
     root.querySelector("#rNo").textContent = (cur + 1) + " / " + slides.length;
     root.querySelector("#rProg").style.width = ((cur + 1) / slides.length * 100) + "%";
     root.querySelectorAll("#rDots button").forEach((b, k) => b.classList.toggle("on", k === cur));
+    if (sec.dataset.score) renderScore(sec);
     shrink(sec);
     if (sec.dataset.read) markRead(sec.dataset.read);
-    if (sec.dataset.score) renderScore(sec);
     if (push !== false) { try { history.replaceState(null, "", deck.base + "/" + (cur + 1)); } catch (e) {} }
   }
 
@@ -267,6 +283,7 @@
     root.querySelector("#rDots").innerHTML = slides.map((s, k) => `<button type="button" aria-label="第 ${k + 1} 頁" class="${s.dataset.sec ? "sec" : ""}"></button>`).join("");
     root.querySelectorAll("#rDots button").forEach((b, k) => b.onclick = () => go(k));
     bindQuiz();
+    cur = 0; deckEl.classList.remove("back");
     open = true; root.hidden = false; document.body.classList.add("reading");
     fit();
     go((page || 1) - 1);
@@ -287,6 +304,12 @@
       else if (a === "close") close(deck && deck.base.startsWith("#/i/") ? "#/" : "#/");
       else if (a === "fs") toggleFs();
       else if (a === "theme") document.getElementById("themeBtn").click();
+      return;
+    }
+    const cb = e.target.closest("[data-cite]");
+    if (cb) {
+      const t = cb.dataset.cite;
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { cb.textContent = "已複製 ✓"; }, () => { cb.textContent = "請手動選取上方文字"; });
       return;
     }
     if (e.target.closest("[data-retry]")) {
@@ -331,6 +354,7 @@
     pages(id) { const a = ARTS.find(x => x.id === id); return a ? buildArticle(a).html.length : 0; },
     issuePages(no) { const d = buildIssue(+no); return d ? d.html.length : 0; },
     readSet,
+    cite(id) { const a = ARTS.find(x => x.id === id); return a ? citeOf(a) : ""; },
     _all() { return slides; }
   };
 })();

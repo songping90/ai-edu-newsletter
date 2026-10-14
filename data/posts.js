@@ -284,6 +284,100 @@ KB_DRAFT["advisory-future-capacity"] = {
     ]
   }
 };
+/* ---- ai-go-framework.js ---- */
+window.KB_DRAFT = window.KB_DRAFT || {};
+KB_DRAFT["ai-go-framework"] = {
+  article: {
+    id: "ai-go-framework",
+    date: "2026-06-05",
+    topics: ["literacy", "intl", "teacher"],
+    title: "荷蘭 AI-GO 教育領域 AI 素養框架",
+    authors: "陳佩英、梁松平",
+    from: "摘自〈從工具到主權：荷蘭 AI 教育政策的脈絡與制度建構〉第四節與結論",
+    tldr: [
+      "Npuls 團隊以概覽式回顧搭配世界咖啡館討論，發布《教育領域AI素養框架》AI-GO。",
+      "框架由知識、技能、態度、倫理四面向組成，每個面向下有集群與對應指標。",
+      "框架肯認個人、組織、政策三類影響因素，作者據此指出缺一環就可能讓推行受阻。"
+    ],
+    takeaway: "推行 AI 素養教育，需要不同層級因素相互支持、共作，缺少任何一環皆可能讓推行受阻。",
+    fulltext: { label: "GEL-net 全文", url: "https://www.gel-net.com/post/%E5%BE%9E%E5%B7%A5%E5%85%B7%E5%88%B0%E4%B8%BB%E6%AC%8A%EF%BC%9A%E8%8D%B7%E8%98%AD-ai-%E6%95%99%E8%82%B2%E6%94%BF%E7%AD%96%E7%9A%84%E8%84%88%E7%B5%A1%E8%88%87%E5%88%B6%E5%BA%A6%E5%BB%BA%E6%A7%8B" },
+    body: [
+      { p: "本則摘自陳佩英、梁松平（2026）〈從工具到主權：荷蘭 AI 教育政策的脈絡與制度建構〉第四節「高等與職業教育的 AI-GO 素養框架建構」，以及結論中與 AI-GO 相關的段落。" },
+      { h: "框架的由來" },
+      { p: "生成式 AI 進入校園後，荷蘭高等與職業教育中亦出現學術誠信問題，以及擔憂技術使用落差將加深社會不平等(Bakker et al., 2024; Flair Collaboration, 2025)。Npuls內部的專業團隊透過對大量實徵研究進行概覽式回顧（umbrella review），搭配教育工作者世界咖啡館（World Café）的兼顧廣度與深度的討論，發布了《教育領域AI素養框架》（AI-GO Framework）。" },
+      { q: "此一框架將AI素養定義為「在以倫理意識為基礎下，具批判性、負責任且有效地與AI系統互動，並為知識、技能與態度三者動態交互作用下的產物」。" },
+      { h: "核心架構" },
+      { p: "架構本身由四面向組合而成，包含關於AI的知識、使用AI的技能、對AI的態度與AI中的倫理，每個面向下涵蓋數個集群及所對應指標。AI-GO之核心架構組成如下表1所示。" },
+      { img: { src: "assets/aigo-table.jpg", alt: "AI-GO 素養框架架構表", cap: "表1　AI-GO 素養框架架構表（註：作者自行歸納整理）" } },
+      { h: "影響因素" },
+      { p: "此外，框架中亦肯認發展AI素養中涉及三類來自內外部的影響因素，包含個人（所受指導及培訓程度、使用經驗、身處角色及情境、理解與應用的相符程度）、組織（組織提供之學習與軟硬體資源、專業發展、支持跨科協作程度、是否整合AI於領導與制度中），以及政策（對AI的公共投資、法規制定、跨部會協作、以政策為導向的專業發展資源）。這也說明推行AI素養教育之過程中，需要不同層級因素相互支持、共作，缺少任何一環皆可能讓推行受阻，整體素養框架架構如下圖2所示。" },
+      { img: { src: "assets/aigo-architecture.jpg", alt: "AI-GO 素養框架整體架構圖", cap: "圖2　AI-GO 素養框架整體架構圖（註：翻譯自 Renkema et al., 2025）" } },
+      { h: "AI-GO 在荷蘭政策中的位置" },
+      { p: "荷蘭教育部國務秘書於2026年2月致議會的信函中亦指出，不能讓教育夥伴獨自面對AI帶來的挑戰，而應號召商業與科研部門共同因應(Ministerie van OCW, 2026)。AI-GO框架也將組織面向列為影響素養落實的因素之一，顯示制度性介入的必要性已被正式納入政策考量。" },
+      { p: "在評量面向，漢恩應用科學大學（HAN University of Applied Sciences）開發的抗AI評量工具包，協助教師分析AI對評量的影響，並設計難以由機器代勞的評量方式，促使評量焦點從最終成品轉向過程性診斷，由學生的提問歷程與應對回覆進行評估，也呼應了AI-GO框架中對所有權與倫理的強調。" },
+      { p: "荷蘭的政策推展整體呈現出層層遞進的意象。GPT-NL確立技術自主性，Npuls在機構間開展支援網絡，AI-GO則提供素養層面的指引。" },
+      { related: "netherlands-ai-sovereignty" }
+    ],
+    refs: [
+      { t: "陳佩英、梁松平（2026年6月5日）。從工具到主權：荷蘭 AI 教育政策的脈絡與制度建構。教育新知國際串聯。", url: "https://www.gel-net.com/post/%E5%BE%9E%E5%B7%A5%E5%85%B7%E5%88%B0%E4%B8%BB%E6%AC%8A%EF%BC%9A%E8%8D%B7%E8%98%AD-ai-%E6%95%99%E8%82%B2%E6%94%BF%E7%AD%96%E7%9A%84%E8%84%88%E7%B5%A1%E8%88%87%E5%88%B6%E5%BA%A6%E5%BB%BA%E6%A7%8B" },
+      { t: "Renkema, M., Van den Boom-Muilenburg, E., Friso-van den Bos, I., Theelen, H., Wopereis, I., & Schildkamp, K. (2025). AI-GO! A Framework for AI Literacy in Education (AI-GO Framework). Npuls AI and Data Literacy.", url: "https://npuls.nl/en/knowledge-base/ai-go-ai-literacy-in-education-a-practical-framework" },
+      { t: "Bakker, T. C., de Kraker, C. C., Eegdeman, I. M., Saçan, E., & van Leeuwen, A. (2024). AI and equity. Vision document. The impact of AI on equity in tertiary education in the Netherlands. Npuls.", url: "https://npuls.nl/_assets/2de693d8-b20f-41e4-af3e-b4b995ac01f7/EN-AI-en-kansengelijkheid-Npuls.pdf" },
+      { t: "Flair Collaboration. (2025). AI competence frameworks and policies in higher education: Synthesis report. Vienna University of Economics and Business.", url: "https://www.wu.ac.at/fileadmin/wu/o/wu4juniors/LLE/FLAIR_Synthesis_Report.pdf" },
+      { t: "Ministerie van Onderwijs, Cultuur en Wetenschap. (2026, February 3). Kamerbrief: Digitalisering en leermiddelen in het funderend onderwijs (Referentie: 61992788). Rijksoverheid.", url: "https://open.overheid.nl/details/af4f0880-13c4-4ec1-9930-f7a5dc1051ee" }
+    ]
+  },
+  slides: {
+    slides: [
+      { kick: "🇳🇱 框架的由來", h: "生成式 AI 進入校園後浮現的兩個問題", deco: "🇳🇱",
+        cards: [
+          { ico: "🎓", t: "學術誠信問題", d: "荷蘭高等與職業教育中出現學術誠信問題。" },
+          { ico: "⚖️", t: "使用落差", d: "擔憂技術使用落差將加深社會不平等。" }
+        ], cols: 2,
+        kbox: { lab: "Npuls 內部的專業團隊", t: "以**概覽式回顧**搭配教育工作者**世界咖啡館**討論，發布《教育領域AI素養框架》（AI-GO）。" },
+        src: "資料來源：陳佩英、梁松平（2026）。從工具到主權：荷蘭 AI 教育政策的脈絡與制度建構。教育新知國際串聯。" },
+      { kick: "🧭 整體架構", h: "AI-GO 素養框架整體架構圖", deco: "🧭",
+        img: { src: "assets/aigo-architecture.jpg", alt: "AI-GO 素養框架整體架構圖", cap: "翻譯自 Renkema et al.（2025）；外圈由內而外為個人、團隊、組織、政策，內文則歸納為個人、組織、政策三類因素" },
+        kbox: { lab: "AI 素養的定義", t: "在以**倫理意識**為基礎下，具批判性、負責任且有效地與AI系統互動，並為知識、技能與態度三者動態交互作用下的產物。" } },
+      { kick: "🧩 四個面向", h: "知識、技能、態度、倫理", deco: "🧩",
+        cards: [
+          { ico: "📘", t: "關於 AI 的知識", d: "事實性知識、應用性知識。" },
+          { ico: "🛠️", t: "使用 AI 的技能", d: "技術性、認知性、互動技能。" },
+          { ico: "💭", t: "對 AI 的態度", d: "態度與情緒、開放程度。" },
+          { ico: "⚖️", t: "AI 中的倫理", d: "後果意識、公平正義、問責及透明度、安全使用、所有權。", note: "素養根基" }
+        ], cols: 4 },
+      { kick: "🧑‍🏫 教育學與教學法", h: "表1 另列專為教學人員設計的項目", deco: "🧑‍🏫",
+        cards: [
+          { ico: "📚", t: "教育者對 AI 的知識", d: "技術、教育學與教學法、倫理、學生如何使用。" },
+          { ico: "🧰", t: "對教育應用的 AI 技能", d: "融入教學法、支持學習、結構化學習脈絡、調整課程。" },
+          { ico: "💡", t: "對 AI 素養的態度", d: "教育情境的開放程度、使用動機、賦予學生批判性評估之能力。" },
+          { ico: "🤲", t: "教育實務中的倫理", d: "自身負責任使用與教導學生正用。" }
+        ], cols: 2,
+        src: "資料來源：陳佩英、梁松平（2026），表1（作者自行歸納整理）。" },
+      { kick: "🏛️ 影響因素", h: "三類影響因素，缺一環就可能受阻", deco: "🏛️",
+        cards: [
+          { ico: "👤", t: "個人", d: "所受指導及培訓、使用經驗、角色及情境等。" },
+          { ico: "🏫", t: "組織", d: "學習與軟硬體資源、專業發展、跨科協作等。" },
+          { ico: "🏛️", t: "政策", d: "公共投資、法規制定、跨部會協作等。" }
+        ], cols: 3,
+        kbox: { lab: "這也說明", t: "推行AI素養教育之過程中，需要不同層級因素**相互支持、共作**。" } },
+      { kick: "🔗 放回荷蘭脈絡", h: "層層遞進的荷蘭政策推展", deco: "🔗",
+        steps: [
+          { t: "GPT-NL", d: "確立技術自主性。" },
+          { t: "Npuls", d: "在機構間開展支援網絡。" },
+          { t: "AI-GO", d: "提供素養層面的指引。" }
+        ],
+        kbox: { lab: "制度性介入", t: "AI-GO 將**組織面向**列為影響素養落實的因素之一，顯示制度性介入的必要性已被正式納入政策考量。" } }
+    ],
+    quiz: [
+      { q: "在 AI-GO 架構表中，被標註為「素養根基」的面向是？",
+        opts: ["使用 AI 的技能", "AI 中的倫理", "對 AI 的態度"], a: 1,
+        why: "表1 將「（四）AI 中的倫理」標註為素養根基。" },
+      { q: "文中指出，AI-GO 框架肯認的三類影響因素是？",
+        opts: ["個人、組織、政策", "學生、家長、學校", "課程、教材、評量"], a: 0,
+        why: "原文：「包含個人（…）、組織（…），以及政策（…）」。" }
+    ]
+  }
+};
 /* ---- australia-ai-ecosystem.js ---- */
 window.KB_DRAFT = window.KB_DRAFT || {};
 KB_DRAFT["australia-ai-ecosystem"] = {

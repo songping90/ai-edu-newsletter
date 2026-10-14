@@ -223,3 +223,53 @@ body.reading { overflow: hidden; }
 .portrait .sl ol.steps li { padding: 12px 18px 12px 84px; min-height: 76px; font-size: 27px; }
 .portrait .sl ol.steps li::before { left: 18px; width: 48px; height: 48px; font-size: 26px; }
 .portrait .sl ol.steps li b { font-size: 31px; }
+
+/* ===== 圖片頁 ===== */
+.sl .imgrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 34px; align-items: center; min-height: 0; }
+.sl .imgside { display: flex; flex-direction: column; gap: 22px; }
+.sl .sfig { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; min-height: 0; }
+.sl .sfig img { max-width: 100%; max-height: 560px; object-fit: contain; border-radius: 18px; box-shadow: 0 14px 34px rgba(0,0,0,.14); background: #fff; }
+.sl .sfig figcaption { font-size: 21px; color: var(--mute); }
+.portrait .sl .imgrow { grid-template-columns: 1fr; gap: 18px; }
+.portrait .sl .sfig img { max-height: 620px; }
+
+/* ===== 每頁版權小字 ===== */
+.sl .slcopy { position: absolute; right: 40px; bottom: 16px; z-index: 2; font-size: 17px; color: var(--mute); opacity: .75; letter-spacing: .03em; pointer-events: none; }
+.sl.divider .slcopy { color: var(--on-fill); opacity: .7; }
+.portrait .sl .slcopy { right: 26px; bottom: 10px; font-size: 15px; }
+
+/* ===== 引用框 ===== */
+.sl .citebox { display: grid; grid-template-columns: auto 1fr auto; gap: 8px 18px; align-items: center; background: var(--zebra); border-radius: 18px; padding: 16px 22px; font-size: 21px; line-height: 1.45; }
+.sl .citebox b { color: var(--c-acc); font-size: 22px; white-space: nowrap; }
+.sl .citebox span { word-break: break-all; }
+.sl .abtn.sm { font-size: 20px; padding: 8px 16px; border-width: 2px; }
+.portrait .sl .citebox { grid-template-columns: 1fr; }
+
+/* ===== 3D 翻頁 ===== */
+.r-deck { perspective: 2400px; }
+.sl.on { animation: slFlip .55s cubic-bezier(.2,.75,.25,1); transform-origin: left center; }
+.r-deck.back .sl.on { animation-name: slFlipBack; transform-origin: right center; }
+@keyframes slFlip { from { opacity: 0; transform: rotateY(-16deg) translateX(40px) translateZ(-60px); } to { opacity: 1; transform: none; } }
+@keyframes slFlipBack { from { opacity: 0; transform: rotateY(16deg) translateX(-40px) translateZ(-60px); } to { opacity: 1; transform: none; } }
+
+/* ===== 封面漂浮幾何 ===== */
+.sl .floaters { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.sl .floaters i { position: absolute; display: block; border-radius: 30%; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 55%, #fff), var(--c)); opacity: .22; animation: floatY 9s ease-in-out infinite; box-shadow: 0 20px 40px color-mix(in srgb, var(--c) 30%, transparent); }
+.sl .floaters i:nth-child(1) { width: 120px; height: 120px; right: 22%; bottom: 14%; transform: rotate(18deg); }
+.sl .floaters i:nth-child(2) { width: 70px; height: 70px; right: 9%; bottom: 36%; border-radius: 50%; animation-delay: -2s; }
+.sl .floaters i:nth-child(3) { width: 46px; height: 46px; right: 33%; top: 18%; border-radius: 50%; animation-delay: -4s; opacity: .3; }
+.sl .floaters i:nth-child(4) { width: 160px; height: 160px; right: -40px; bottom: -40px; border-radius: 40%; animation-delay: -6s; opacity: .14; }
+.sl .floaters i:nth-child(5) { width: 30px; height: 30px; right: 14%; top: 54%; animation-delay: -1s; opacity: .35; }
+@keyframes floatY { 0%, 100% { translate: 0 0; rotate: 0deg; } 50% { translate: 0 -26px; rotate: 14deg; } }
+.sl[data-deco]::after { animation: decoBob 6s ease-in-out infinite; }
+@keyframes decoBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sl.on, .r-deck.back .sl.on { animation: none; }
+  .sl .floaters i, .sl[data-deco]::after { animation: none; }
+}
+
+/* 結尾頁有引用框時縮小分數區 */
+.sl[data-score] .score { font-size: 130px; }
+.sl[data-score] .sbody { gap: 18px !important; }
+.sl[data-score] .nextcard { padding: 14px 24px; }
