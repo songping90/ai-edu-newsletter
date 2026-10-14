@@ -226,7 +226,9 @@
     const inner = sec.querySelector(".sin");
     inner.style.zoom = 1;
     let k = 1;
-    while (sec.scrollHeight > sec.clientHeight + 1 && k > 0.62) { k -= 0.04; inner.style.zoom = k; }
+    const body = sec.querySelector(".sbody");
+    const over = () => sec.scrollHeight > sec.clientHeight + 1 || (body && body.scrollHeight > body.clientHeight + 1);
+    while (over() && k > 0.62) { k -= 0.04; inner.style.zoom = k; }
   }
 
   function go(i, push) {

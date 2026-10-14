@@ -274,3 +274,16 @@ body.reading { overflow: hidden; }
 .sl[data-score] .sbody { gap: 18px !important; }
 .sl[data-score] .nextcard { padding: 14px 24px; }
 
+
+/* ===== 修正：內容過高時不再上下溢出蓋住標題與出處 ===== */
+.sl .sbody { justify-content: flex-start; }
+.sl .sbody > :first-child { margin-top: auto; }
+.sl .sbody > :last-child { margin-bottom: auto; }
+.sl .src, .sl .qnote { position: relative; z-index: 1; background: var(--paper); }
+/* 時間軸年份不換行 */
+.sl .tl .ti { grid-template-columns: minmax(150px, max-content) 1fr; }
+.sl .tl .y { white-space: nowrap; }
+.portrait .sl .tl .ti { grid-template-columns: 1fr; }
+/* 版權字改為獨立一列，不再壓在出處上 */
+.sl .slcopy { position: relative; right: auto; bottom: auto; align-self: flex-end; flex: none; margin: -10px -36px -24px 0; }
+.portrait .sl .slcopy { position: relative; right: auto; bottom: auto; margin: -8px -20px -18px 0; }
