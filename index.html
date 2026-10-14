@@ -242,7 +242,7 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 .hero3d.live .orb-fallback { display: none; }
 @keyframes orbPulse { 0%, 100% { scale: 1; } 50% { scale: 1.06; } }
 .hero .wrap { position: relative; }
-.hero .wrap > *:not(.hero3d):not(.hero-art) { position: relative; z-index: 1; }
+.hero .wrap > *:not(.hero3d):not(.hero-figure) { position: relative; z-index: 1; }
 @media (max-width: 760px) { .hero3d { width: 78vw; right: -22vw; top: 40%; opacity: .55; } }
 
 /* ===== 進場動畫 ===== */
@@ -269,6 +269,38 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 .featcard .go { display: inline-flex; background: var(--c); color: #fff; font-weight: 900; padding: 10px 20px; border-radius: 14px; font-size: 16.5px; }
 @media (max-width: 820px) { .featcard { grid-template-columns: 1fr; padding: 18px; } .featcard .device { transform: none; } }
 
+/* ===== 側邊工具列 ===== */
+.rail { position: fixed; left: 16px; top: 50%; translate: 0 -50%; z-index: 40; display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+.rail a, .rail button { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px; width: 52px; padding: 7px 0 6px; border-radius: 14px; border: 0; background: none; color: var(--ink); text-decoration: none; cursor: pointer; font: inherit; }
+.rail span { font-size: 20px; line-height: 1.1; }
+.rail em { font-style: normal; font-size: 11.5px; color: var(--mute); font-weight: 700; letter-spacing: .04em; }
+.rail a:hover, .rail button:hover { background: color-mix(in srgb, var(--brand) 10%, var(--paper)); }
+.rail a:hover em, .rail button:hover em { color: var(--brand); }
+.rail .sep { display: block; height: 1px; margin: 4px 8px; background: var(--line); }
+.rail [data-tip]::after { content: attr(data-tip); position: absolute; left: calc(100% + 10px); top: 50%; translate: 0 -50%; white-space: nowrap; background: var(--title); color: var(--paper); font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity .15s; }
+.rail [data-tip]:hover::after { opacity: 1; }
+.fab { display: none; position: fixed; left: 16px; bottom: 18px; z-index: 40; width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow-hi); font-size: 22px; cursor: pointer; }
+@media (min-width: 1360px) { .navlinks { display: none !important; } }
+@media (max-width: 1359px) { .rail { display: none; } .fab { display: grid; place-items: center; } }
+
+/* ===== 全站搜尋面板 ===== */
+.spanel { position: fixed; inset: 0; z-index: 110; background: rgba(12, 19, 29, .38); display: flex; justify-content: center; align-items: flex-start; padding: 8vh 16px 16px; }
+.spanel[hidden] { display: none; }
+.sp-box { width: min(760px, 100%); max-height: 84vh; display: flex; flex-direction: column; background: var(--paper); border-radius: 22px; box-shadow: 0 30px 80px rgba(0,0,0,.3); overflow: hidden; }
+.sp-head { display: flex; gap: 10px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.sp-input { flex: 1; display: flex; gap: 8px; align-items: center; font-size: 18px; }
+.sp-input input { flex: 1; border: 0; outline: 0; background: none; font: inherit; font-size: 18px; color: var(--ink); padding: 6px 0; }
+.sp-topics { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 16px 6px; }
+.sp-topics .tchip { font-size: 13.5px; padding: 4px 12px; }
+.sp-list { overflow: auto; padding: 6px 10px 14px; }
+.sp-item { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; padding: 10px; border-radius: 14px; text-decoration: none; color: var(--ink); }
+.sp-item:hover { background: var(--zebra); }
+.sp-item .em { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 22px; background: color-mix(in srgb, var(--c) 12%, var(--paper)); }
+.sp-item b { display: block; color: var(--title); font-size: 16px; line-height: 1.45; }
+.sp-item small { color: var(--mute); font-size: 13px; }
+.sp-item .go { color: var(--c); }
+.sp-empty { padding: 30px; text-align: center; color: var(--mute); }
+
 /* ===== 首頁主視覺（品牌區） ===== */
 .hero { background: linear-gradient(180deg, color-mix(in srgb, var(--paper) 55%, var(--ground)), var(--ground)); padding-bottom: 70px; }
 .hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden;
@@ -281,6 +313,11 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 .lockup b { display: block; font-size: 19px; color: var(--title); font-weight: 900; line-height: 1.35; }
 .lockup span { display: block; font-size: 15.5px; color: var(--mute); font-weight: 500; }
 .hero h1 .grad { background: linear-gradient(120deg, #2F6DB5, #0E7C74 55%, #7048B0); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: 4px; }
+.hblocks { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 0; }
+.hblocks span { display: inline-flex; align-items: baseline; gap: 4px; background: color-mix(in srgb, var(--brand) 9%, var(--paper)); border: 1px solid color-mix(in srgb, var(--brand) 18%, transparent); border-radius: 14px; padding: 8px 16px; font-size: 14.5px; color: var(--mute); }
+.hblocks b { color: var(--brand); font-size: 22px; font-weight: 900; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.hblocks .wide b { font-size: 17px; }
+.hblocks small { font-size: 13.5px; }
 .hmeta { margin: 6px 0 0; font-size: 15px; color: var(--mute); }
 .hmeta i { font-style: normal; margin: 0 8px; opacity: .6; }
 .hstats { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
@@ -300,11 +337,18 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 
 /* ===== 主視覺插圖 ===== */
 .hero { min-height: 520px; }
-.hero-art { position: absolute; z-index: 1; right: -10px; top: 50%; translate: 0 -50%; width: min(600px, 50vw); height: auto; pointer-events: none; filter: drop-shadow(0 18px 30px rgba(23,54,93,.12)); animation: artBob 7s ease-in-out infinite; }
+.hero-figure { position: absolute; z-index: 1; right: -10px; top: 50%; translate: 0 -50%; width: min(600px, 50vw); pointer-events: none; animation: artBob 7s ease-in-out infinite; }
+.hero-art { display: block; width: 100%; height: auto; filter: drop-shadow(0 18px 30px rgba(23,54,93,.12)); }
+/* 魔法球：圖中球心 (720,683)／1536×1024，內圈半徑 66，不壓到爪子與筆電 */
+.orb-logo { position: absolute; left: 42.58%; top: 60.25%; width: 8.59%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: #eef0fb;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.85), 0 0 14px 5px rgba(110,180,255,.75), inset 0 0 10px rgba(110,180,255,.6); animation: orbGlow 3.4s ease-in-out infinite; }
+.orb-logo img { position: absolute; inset: 8%; width: 84%; height: 84%; object-fit: contain; }
+.orb-logo::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.75), transparent 38%), radial-gradient(circle, transparent 58%, rgba(120,185,255,.35) 100%); }
+@keyframes orbGlow { 0%, 100% { box-shadow: 0 0 0 2px rgba(255,255,255,.85), 0 0 12px 4px rgba(110,180,255,.6), inset 0 0 10px rgba(110,180,255,.55); } 50% { box-shadow: 0 0 0 2px rgba(255,255,255,.95), 0 0 22px 9px rgba(110,180,255,.85), inset 0 0 12px rgba(110,180,255,.7); } }
 @keyframes artBob { 0%, 100% { translate: 0 -50%; } 50% { translate: 0 calc(-50% - 8px); } }
 .hero3d { opacity: .45; }
-@media (max-width: 760px) { .hero { min-height: 0; padding-bottom: 16px; } .hero-art { position: relative; display: block; right: auto; top: auto; translate: none; width: 100%; max-width: 420px; margin: 10px auto 0; animation: none; } .hero3d { display: none; } }
-@media (prefers-reduced-motion: reduce) { .hero-art { animation: none; } }
+@media (max-width: 760px) { .hero { min-height: 0; padding-bottom: 16px; } .hero-figure { position: relative; right: auto; top: auto; translate: none; width: 100%; max-width: 420px; margin: 10px auto 0; animation: none; } .hero3d { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-figure, .orb-logo { animation: none; } }
 
 /* ===== 新知卡（同互動專題風格） ===== */
 .newslist { display: grid; gap: 22px; }
@@ -530,6 +574,24 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   </div>
 </header>
 
+<aside class="rail" aria-label="網站工具列">
+  <a href="#/" data-jump="top" data-tip="回到首頁"><span>🏠</span><em>首頁</em></a>
+  <a href="#/" data-jump="latest" data-tip="最新"><span>🆕</span><em>最新</em></a>
+  <a href="#/" data-jump="features" data-tip="互動專題"><span>🧩</span><em>專題</em></a>
+  <a href="#/" data-jump="all" data-tip="全部新知"><span>📚</span><em>全部</em></a>
+  <a href="#/" data-jump="issues" data-tip="快報合輯"><span>🗂️</span><em>合輯</em></a>
+  <i class="sep"></i>
+  <button type="button" class="openSearch" data-tip="搜尋（按 / 鍵）"><span>🔍</span><em>搜尋</em></button>
+  <a href="#/" data-jump="copyright" data-tip="版權與引用"><span>©</span><em>引用</em></a>
+</aside>
+<button class="fab openSearch" type="button" aria-label="搜尋新知">🔍</button>
+<div class="spanel" id="spanel" hidden>
+  <div class="sp-box" role="dialog" aria-label="搜尋新知">
+    <div class="sp-head"><label class="sp-input">🔍<input id="spq" type="search" placeholder="搜尋標題、導讀與全文，例如：評量、荷蘭、PISA" autocomplete="off"></label><button class="rbtn" type="button" id="spClose">✕</button></div>
+    <div class="sp-topics" id="spTopics"></div>
+    <div class="sp-list" id="spList"></div>
+  </div>
+</div>
 <main id="app"></main>
 
 <footer>
@@ -680,7 +742,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     const first = sorted[0];
     const used = TOPICS.filter(t => ARTS.some(a => a.topics.includes(t.key)));
     app.innerHTML = `
-    <section class="hero"><div class="hero-bg" aria-hidden="true"></div><div class="wrap">
+    <section class="hero" id="top"><div class="hero-bg" aria-hidden="true"></div><div class="wrap">
       <div class="lockup">
         <img src="assets/logo-tfai.png" alt="師資培育 AI 計畫標誌" width="360" height="360">
         <div><b>數位科技轉化大學師培課程培訓計畫</b><span>陳佩英教授計畫團隊</span></div>
@@ -691,10 +753,15 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         ${first ? `<a class="playbtn" href="#/s/${first.id}">▶ 從最新一則開始</a>` : ""}
         <a class="ghostbtn" href="#/" data-jump="all">瀏覽全部 ↓</a>
       </div>
-      <p class="hmeta">${ARTS.length} 則新知<i>·</i>${used.length} 個主題<i>·</i>${ISSUES.length} 期快報合輯<i>·</i>最近更新 ${fmtDate(sorted[0] ? sorted[0]._date : "")}</p>
+      <div class="hblocks">
+        <span><b>${ARTS.length}</b>則新知</span>
+        <span><b>${used.length}</b>個主題</span>
+        <span><b>${ISSUES.length}</b>期快報合輯</span>
+        <span class="wide"><small>最近更新</small><b>${fmtDate(sorted[0] ? sorted[0]._date : "")}</b></span>
+      </div>
       <p class="hero-copy">© 2026 陳佩英教授計畫團隊・數位科技轉化大學師培課程培訓計畫</p>
       <div class="hero3d" id="hero3d" aria-hidden="true"><div class="orb-fallback"></div></div>
-      <img class="hero-art" src="assets/mascot-community.webp" alt="計畫主視覺：吉祥物與教授、教師、學生共學" width="1536" height="1024" fetchpriority="high">
+      <div class="hero-figure"><img class="hero-art" src="assets/mascot-community.webp" alt="計畫主視覺：吉祥物捧著師資培育 AI 魔法球，與教授、教師、學生共學" width="1536" height="1024" fetchpriority="high"><span class="orb-logo" aria-hidden="true"><img src="assets/logo-icon.png" alt=""></span></div>
     </div>
     <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,30 C240,60 480,0 720,22 C960,44 1200,12 1440,30 L1440,60 L0,60 Z"/></svg>
     </section>
@@ -749,10 +816,11 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 
     renderGrid();
     bindHome();
+    window.scrollTo({ top: 0, behavior: "instant" });
     if (scrollTo) {
       const el = document.getElementById(scrollTo);
-      if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth" }));
-    } else window.scrollTo(0, 0);
+      if (el) setTimeout(() => window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: "instant" }), 40);
+    }
   }
 
   function renderGrid() {
@@ -783,11 +851,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     if (cs) cs.onclick = () => copyText(document.getElementById("siteCite").textContent, "已複製本站引用格式");
     initHero3D(); initTilt(); initReveal(); initPreviews(); initMini();
     document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; renderGrid(); });
-    document.getElementById("searchBtn").addEventListener("click", () => {
-      const row = document.getElementById("searchRow");
-      row.hidden = !row.hidden; state.searchOpen = !row.hidden;
-      if (!row.hidden) document.getElementById("q").focus();
-    });
+    document.getElementById("searchBtn").addEventListener("click", () => openSearch());
     document.querySelectorAll(".tchip").forEach(b => b.addEventListener("click", () => {
       state.topic = b.dataset.topic; syncTopics(); renderGrid();
     }));
@@ -1024,6 +1088,37 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     };
     if (reduceMotion) { renderer.render(scene, cam); } else h3.raf = requestAnimationFrame(tick);
   }
+
+  /* ---------- 全站搜尋面板 ---------- */
+  const sp = document.getElementById("spanel"), spq = document.getElementById("spq");
+  let spTopic = "";
+  function renderSearch() {
+    const q = spq.value.trim().toLowerCase();
+    const used = TOPICS.filter(t => ARTS.some(a => a.topics.includes(t.key)));
+    document.getElementById("spTopics").innerHTML = `<button type="button" class="tchip ${spTopic ? "" : "on"}" data-st="">全部</button>` +
+      used.map(t => `<button type="button" class="tchip ${spTopic === t.key ? "on" : ""}" data-st="${t.key}">${t.emoji} ${esc(t.name)}</button>`).join("");
+    const list = sorted.filter(a => (!spTopic || a.topics.includes(spTopic)) && (!q || a._text.includes(q)));
+    document.getElementById("spList").innerHTML = list.length ? list.map(a => {
+      const t = T[a.topics[0]] || {};
+      return `<a class="sp-item" href="#/s/${a.id}" style="--c:${color(a)}"><span class="em">${deco(a)}</span><span class="tx"><b>${hl(a.title, spq.value.trim())}</b><small>${esc(t.name || "")} · ${fmtDate(a._date)}${a.authors ? " · " + esc(a.authors) : ""}</small></span><span class="go">▶</span></a>`;
+    }).join("") : `<div class="sp-empty">找不到符合的新知，換個關鍵字試試。</div>`;
+    document.querySelectorAll("#spTopics [data-st]").forEach(b => b.onclick = () => { spTopic = b.dataset.st; renderSearch(); });
+  }
+  function openSearch() { sp.hidden = false; document.body.classList.add("reading"); renderSearch(); setTimeout(() => spq.focus(), 30); }
+  function closeSearch() {
+    if (sp.hidden) return;
+    sp.hidden = true;
+    const rd = document.getElementById("reader");
+    if (fo.hidden && (!rd || rd.hidden)) document.body.classList.remove("reading");
+  }
+  spq.addEventListener("input", renderSearch);
+  document.getElementById("spClose").onclick = closeSearch;
+  sp.addEventListener("click", e => { if (e.target === sp) closeSearch(); if (e.target.closest(".sp-item")) closeSearch(); });
+  document.querySelectorAll(".openSearch").forEach(b => b.addEventListener("click", openSearch));
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !sp.hidden) { closeSearch(); return; }
+    if (e.key === "/" && sp.hidden && !/input|textarea/i.test((document.activeElement || {}).tagName || "") && fo.hidden && document.getElementById("reader").hidden) { e.preventDefault(); openSearch(); }
+  });
 
   /* ---------- 路由 ---------- */
   function route() {
