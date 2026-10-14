@@ -340,6 +340,14 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 .hero-figure { position: absolute; z-index: 1; right: -10px; top: 50%; translate: 0 -50%; width: min(600px, 50vw); pointer-events: none; animation: artBob 7s ease-in-out infinite; }
 .hero-art { display: block; width: 100%; height: auto; filter: drop-shadow(0 18px 30px rgba(23,54,93,.12)); }
 /* 魔法球：圖中球心 (720,683)／1536×1024，內圈半徑 66，不壓到爪子與筆電 */
+/* 吉祥物動畫：疊在靜態主視覺上（位置由 _來源/mascot 對位換算），開始播放後淡入；深色模式與減少動態時維持靜態圖 */
+.hero-video { position: absolute; left: 12.32%; top: 8.94%; width: 76.48%; height: 81.89%; object-fit: fill; opacity: 0; transition: opacity .6s ease; pointer-events: none; }
+.hero-figure.playing .hero-video { opacity: 1; }
+.hero-figure.playing .hero-static { opacity: 0; transition: opacity .6s ease .1s; }
+:root[data-theme="dark"] .hero-video { display: none; }
+:root[data-theme="dark"] .hero-figure.playing .hero-static { opacity: 1; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero-video { display: none; } :root:not([data-theme="light"]) .hero-figure.playing .hero-static { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } .hero-figure.playing .hero-static { opacity: 1; } }
 .orb-logo { position: absolute; left: 42.58%; top: 60.25%; width: 8.59%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: #eef0fb;
   box-shadow: 0 0 0 2px rgba(255,255,255,.85), 0 0 14px 5px rgba(110,180,255,.75), inset 0 0 10px rgba(110,180,255,.6); animation: orbGlow 3.4s ease-in-out infinite; }
 .orb-logo img { position: absolute; inset: 8%; width: 84%; height: 84%; object-fit: contain; }
@@ -761,7 +769,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
       </div>
       <p class="hero-copy">© 2026 陳佩英教授計畫團隊・數位科技轉化大學師培課程培訓計畫</p>
       <div class="hero3d" id="hero3d" aria-hidden="true"><div class="orb-fallback"></div></div>
-      <div class="hero-figure"><img class="hero-art" src="assets/mascot-community.webp" alt="計畫主視覺：吉祥物與教授、教師、學生共學" width="1536" height="1024" fetchpriority="high"></div>
+      <div class="hero-figure"><img class="hero-art hero-static" src="assets/mascot-community.webp" alt="計畫主視覺：吉祥物與教授、教師、學生共學" width="1536" height="1024" fetchpriority="high"><video class="hero-video" muted loop playsinline autoplay preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1"><source src="assets/hero-mascot.mov" type='video/quicktime; codecs="hvc1"'><source src="assets/hero-mascot.webm" type="video/webm"></video></div>
     </div>
     <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,30 C240,60 480,0 720,22 C960,44 1200,12 1440,30 L1440,60 L0,60 Z"/></svg>
     </section>
@@ -849,7 +857,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   function bindHome() {
     const cs = document.getElementById("copySite");
     if (cs) cs.onclick = () => copyText(document.getElementById("siteCite").textContent, "已複製本站引用格式");
-    initHero3D(); initTilt(); initReveal(); initPreviews(); initMini();
+    initHero3D(); initTilt(); initReveal(); initPreviews(); initMini(); initHeroVideo();
     document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; renderGrid(); });
     document.getElementById("searchBtn").addEventListener("click", () => openSearch());
     document.querySelectorAll(".tchip").forEach(b => b.addEventListener("click", () => {
@@ -1119,6 +1127,18 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     if (e.key === "Escape" && !sp.hidden) { closeSearch(); return; }
     if (e.key === "/" && sp.hidden && !/input|textarea/i.test((document.activeElement || {}).tagName || "") && fo.hidden && document.getElementById("reader").hidden) { e.preventDefault(); openSearch(); }
   });
+
+  /* 首頁吉祥物動畫：可播放才換上，離開畫面就暫停 */
+  function initHeroVideo() {
+    const v = document.querySelector(".hero-video"); if (!v) return;
+    const fig = v.closest(".hero-figure");
+    if (reduceMotion) { v.removeAttribute("autoplay"); v.preload = "none"; return; }
+    v.muted = true;
+    v.addEventListener("playing", () => fig.classList.add("playing"), { once: true });
+    const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    tryPlay();
+    if ("IntersectionObserver" in window) new IntersectionObserver(es => { es[0].isIntersecting ? tryPlay() : v.pause(); }).observe(v);
+  }
 
   /* ---------- 路由 ---------- */
   function route() {
