@@ -247,12 +247,12 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 @media (max-width: 760px) { .hero3d { width: 78vw; right: -22vw; top: 40%; opacity: .55; } }
 
 /* ===== 進場動畫 ===== */
-.reveal, .btile, .tile { opacity: 0; translate: 0 18px; transition: opacity .6s ease var(--d, 0ms), translate .6s ease var(--d, 0ms), transform .2s, box-shadow .2s; }
-.reveal.in, .btile.in, .tile.in { opacity: 1; translate: 0 0; }
+.reveal, .newscard, .ncard { opacity: 0; translate: 0 18px; transition: opacity .6s ease var(--d, 0ms), translate .6s ease var(--d, 0ms), transform .2s, box-shadow .2s; }
+.reveal.in, .newscard.in, .ncard.in { opacity: 1; translate: 0 0; }
 .btile .band .em { animation: emFloat 5s ease-in-out infinite; }
 .btile:nth-child(2) .band .em { animation-delay: -1.6s; } .btile:nth-child(3) .band .em { animation-delay: -3.2s; }
 @keyframes emFloat { 0%, 100% { translate: 0 0; rotate: -6deg; } 50% { translate: 0 -10px; rotate: 4deg; } }
-.btile, .featcard { transform-style: preserve-3d; will-change: transform; }
+.featcard, .ncard { will-change: transform; }
 
 /* ===== 互動專題卡 ===== */
 .featcard { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 30px; align-items: center; text-decoration: none; color: var(--ink); background: linear-gradient(135deg, var(--c-soft), var(--paper) 60%); border-radius: 26px; padding: 28px; box-shadow: var(--shadow); border-top: 8px solid var(--c); transition: transform .2s, box-shadow .2s; }
@@ -268,6 +268,35 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 .featcard p { margin: 0 0 14px; font-size: 16.5px; color: var(--ink); line-height: 1.7; }
 .featcard .go { display: inline-flex; background: var(--c); color: #fff; font-weight: 900; padding: 10px 20px; border-radius: 14px; font-size: 16.5px; }
 @media (max-width: 820px) { .featcard { grid-template-columns: 1fr; padding: 18px; } .featcard .device { transform: none; } }
+
+/* ===== 新知卡（同互動專題風格） ===== */
+.newslist { display: grid; gap: 22px; }
+.featcard.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); background: linear-gradient(225deg, var(--c-soft), var(--paper) 60%); }
+.featcard.flip .device { order: 2; transform: perspective(1100px) rotateY(-10deg) rotateX(4deg); }
+.featcard.flip:hover .device { transform: perspective(1100px) rotateY(-2deg) rotateX(1deg); }
+.featcard .fc-meta { font-size: 15px; color: var(--mute); margin: -2px 0 10px; }
+.newscard h3 { font-size: 24px; }
+@media (max-width: 820px) { .featcard.flip { grid-template-columns: 1fr; } .featcard.flip .device { order: 0; transform: none; } }
+.ncards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 20px; }
+.ncard { display: flex; flex-direction: column; gap: 14px; background: linear-gradient(160deg, var(--c-soft), var(--paper) 55%); border-radius: 22px; padding: 16px 16px 18px; box-shadow: var(--shadow); border-top: 6px solid var(--c); cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.ncard:hover { box-shadow: var(--shadow-hi); }
+.ncard:focus-visible { outline: 3px solid var(--c); outline-offset: 3px; }
+.ncard .device { background: #1d2430; box-shadow: 0 16px 34px rgba(0,0,0,.24), inset 0 0 0 2px rgba(255,255,255,.06); }
+.ncard .screen { position: relative; aspect-ratio: 16 / 9; background: var(--c-soft); display: grid; place-items: center; }
+.ncard .screen .ph { font-size: 46px; }
+.device.sm { border-radius: 16px; padding: 8px; transform: perspective(900px) rotateX(6deg); transition: transform .35s; }
+.ncard:hover .device.sm { transform: perspective(900px) rotateX(0deg) translateY(-2px); }
+.device.sm .screen { border-radius: 9px; }
+.ncard .nc-tag { font-size: 13.5px; font-weight: 700; color: var(--c-acc); letter-spacing: .04em; }
+.ncard h3 { margin: 2px 0 0; font-size: 18px; line-height: 1.45; color: var(--title); }
+.ncard .meta { font-size: 13.5px; color: var(--mute); margin-top: 4px; }
+.nc-body { padding: 0 4px; }
+.screen.mini { overflow: hidden; }
+.mini-deck { position: absolute; left: 0; top: 0; width: 1600px; height: 900px; transform-origin: 0 0; pointer-events: none; }
+.mini-deck .sl { border-radius: 0; box-shadow: none; }
+.mini-deck .sl.on { animation: miniIn .6s ease; }
+@keyframes miniIn { from { opacity: 0; } to { opacity: 1; } }
+.screen.mini.ready .ph { display: none; }
 
 /* ===== 互動專題全螢幕 ===== */
 .featov { position: fixed; inset: 0; z-index: 120; background: var(--ground); display: flex; flex-direction: column; }
@@ -295,7 +324,7 @@ footer .foot-note { margin-top: 4px; }
 .bfig figcaption { font-size: 14.5px; color: var(--mute); margin-top: 6px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .btile, .tile { opacity: 1; translate: none; transition: none; }
+  .reveal, .newscard, .ncard { opacity: 1; translate: none; transition: none; }
   .btile .band .em, .hero3d .orb-fallback { animation: none; }
 }
 
@@ -550,27 +579,57 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     return `<span class="tag" style="--c:${t.color}">${t.emoji} ${esc(t.name)}</span>`;
   }
 
-  /* 大卡：最新三則，只放圖示、主題、標題 */
-  function bigTile(a) {
+  /* 大卡：最新三則，平板裡放這則簡報的即時預覽 */
+  function bigTile(a, i) {
     const t = T[a.topics[0]] || {};
-    return `<a class="btile" href="#/s/${a.id}" style="--c:${color(a)}">
-      <div class="band"><span class="em">${deco(a)}</span>${READ.has(a.id) ? '<span class="read">✓ 已讀</span>' : '<span class="new">NEW</span>'}</div>
-      <div class="tb">
-        <span class="tname">${esc(t.name || "")}</span>
+    const badge = READ.has(a.id) ? "✓ 已讀" : "NEW";
+    return `<a class="featcard newscard tilt ${i % 2 ? "flip" : ""}" href="#/s/${a.id}" style="--c:${color(a)}">
+      <div class="device"><div class="screen mini" data-id="${a.id}" data-auto="1"><span class="ph">${deco(a)}</span></div></div>
+      <div class="fc-text">
+        <span class="fc-tag">${badge}・${esc(t.name || "")}・約 ${mins(a)} 分鐘・含小測驗</span>
         <h3>${esc(a.title)}</h3>
-        <span class="go">▶ 翻頁閱讀 · 約 ${mins(a)} 分鐘</span>
+        <div class="fc-meta">${a.authors ? `✍️ ${esc(a.authors)}　` : ""}📅 ${fmtDate(a._date)}</div>
+        <p>${md(a.tldr[0] || "")}</p>
+        <span class="go">▶ 翻頁閱讀</span>
       </div></a>`;
   }
-  /* 小卡：全部新知，只放標題與日期 */
+  /* 小卡：全部新知，平板預覽＋標題 */
   function tile(a, q) {
-    return `<article class="tile" style="--c:${color(a)}" tabindex="0" data-id="${a.id}" role="link" aria-label="${esc(a.title)}">
-      <span class="em">${deco(a)}</span>
-      <div class="tt">
+    const t = T[a.topics[0]] || {};
+    return `<article class="ncard tilt" style="--c:${color(a)}" tabindex="0" data-id="${a.id}" role="link" aria-label="${esc(a.title)}">
+      <div class="device sm"><div class="screen mini" data-id="${a.id}"><span class="ph">${deco(a)}</span></div></div>
+      <div class="nc-body">
+        <span class="nc-tag">${t.emoji || ""} ${esc(t.name || "")}</span>
         <h3>${hl(a.title, q)}</h3>
-        <div class="meta">${fmtDate(a._date)}${NEWEST.has(a.id) && !READ.has(a.id) ? ' · <span class="new">NEW</span>' : ""}${READ.has(a.id) ? ' · <span class="read">✓ 已讀</span>' : ""}</div>
+        <div class="meta">${fmtDate(a._date)}${a.authors ? " · " + esc(a.authors) : ""}${NEWEST.has(a.id) && !READ.has(a.id) ? ' · <span class="new">NEW</span>' : ""}${READ.has(a.id) ? ' · <span class="read">✓ 已讀</span>' : ""}</div>
       </div>
-      <span class="arrow">▶</span>
     </article>`;
+  }
+
+  /* 平板裡的迷你簡報：封面 → 三十秒導讀 → 第一張內容頁 */
+  function initMini() {
+    if (!R || !R.preview) return;
+    document.querySelectorAll(".screen.mini[data-id]:not(.ready)").forEach(sc => {
+      const html = R.preview(sc.dataset.id); if (!html.length) return;
+      sc.classList.add("ready");
+      sc.innerHTML = `<div class="mini-deck">${html.join("")}</div>`;
+      const deck = sc.firstChild, sl = [...deck.children];
+      sl[0].classList.add("on");
+      const fit = () => { deck.style.transform = `scale(${sc.clientWidth / 1600})`; };
+      fit();
+      if ("ResizeObserver" in window) new ResizeObserver(fit).observe(sc); else window.addEventListener("resize", fit);
+      let k = 0, timer = null;
+      const show = n => { sl[k].classList.remove("on"); k = n % sl.length; sl[k].classList.add("on"); };
+      const start = ms => { if (!timer && !reduceMotion) timer = setInterval(() => show(k + 1), ms); };
+      const stop = () => { clearInterval(timer); timer = null; };
+      const card = sc.closest(".featcard, .ncard");
+      if (sc.dataset.auto && "IntersectionObserver" in window) {
+        new IntersectionObserver(es => { es[0].isIntersecting ? start(3200) : stop(); }, { threshold: .4 }).observe(sc);
+      } else if (card) {
+        card.addEventListener("pointerenter", () => { show(1); start(1600); });
+        card.addEventListener("pointerleave", () => { stop(); show(0); });
+      }
+    });
   }
 
   /* ---------- 首頁 ---------- */
@@ -593,7 +652,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 
     <section class="block" id="latest"><div class="wrap">
       <div class="sec-h"><h2>最新</h2></div>
-      <div class="btiles">${sorted.slice(0, 3).map(bigTile).join("")}</div>
+      <div class="newslist">${sorted.slice(0, 3).map(bigTile).join("")}</div>
     </div></section>
 
     ${FEATS.length ? `<section class="block reveal" id="features"><div class="wrap">
@@ -619,7 +678,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         ${used.map(t => `<button type="button" class="tchip ${state.topic === t.key ? "on" : ""}" style="--c:${t.color}" data-topic="${t.key}">${t.emoji} ${esc(t.name)}</button>`).join("")}
       </div>
       <div class="active-filter" id="af"></div>
-      <div class="tiles" id="grid"></div>
+      <div class="ncards" id="grid"></div>
     </div></section>
 
     <section class="block reveal" id="copyright"><div class="wrap">
@@ -655,6 +714,8 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
       (!q || a._text.includes(q)));
     document.getElementById("grid").innerHTML = list.length ? list.map(a => tile(a, state.q.trim())).join("")
       : `<div class="empty">找不到符合的新知，換個關鍵字試試。</div>`;
+    document.querySelectorAll("#grid .ncard").forEach(c => c.classList.add("in"));
+    initMini(); initTilt();
     const bits = [];
     if (state.issue) bits.push(`<span class="tag">第 ${state.issue} 期快報</span>`);
     if (q) bits.push(`<span class="tag">「${esc(state.q.trim())}」</span>`);
@@ -671,7 +732,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   function bindHome() {
     const cs = document.getElementById("copySite");
     if (cs) cs.onclick = () => copyText(document.getElementById("siteCite").textContent, "已複製本站引用格式");
-    initHero3D(); initTilt(); initReveal(); initPreviews();
+    initHero3D(); initTilt(); initReveal(); initPreviews(); initMini();
     document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; renderGrid(); });
     document.getElementById("searchBtn").addEventListener("click", () => {
       const row = document.getElementById("searchRow");
@@ -688,11 +749,11 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 
   /* 卡片點擊（委派） */
   app.addEventListener("click", e => {
-    const card = e.target.closest(".tile");
+    const card = e.target.closest(".ncard");
     if (card && !e.target.closest("a")) location.hash = "#/s/" + card.dataset.id;
   });
   app.addEventListener("keydown", e => {
-    const card = e.target.closest && e.target.closest(".tile");
+    const card = e.target.closest && e.target.closest(".ncard");
     if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); location.hash = "#/s/" + card.dataset.id; }
   });
 
@@ -811,7 +872,8 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function initTilt() {
     if (reduceMotion || matchMedia("(hover: none)").matches) return;
-    document.querySelectorAll(".tilt, .btile").forEach(el => {
+    document.querySelectorAll(".tilt:not([data-tilt])").forEach(el => {
+      el.dataset.tilt = "1";
       el.addEventListener("pointermove", e => {
         const r = el.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
@@ -821,7 +883,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     });
   }
   function initReveal() {
-    const els = document.querySelectorAll(".reveal, .btile, .tile");
+    const els = document.querySelectorAll(".reveal, .newscard, .ncard");
     if (reduceMotion || !("IntersectionObserver" in window)) { els.forEach(e => e.classList.add("in")); return; }
     const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { threshold: .08 });
     els.forEach((e, i) => { e.style.setProperty("--d", (i % 6) * 60 + "ms"); io.observe(e); });

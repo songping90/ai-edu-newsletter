@@ -354,6 +354,7 @@
     pages(id) { const a = ARTS.find(x => x.id === id); return a ? buildArticle(a).html.length : 0; },
     issuePages(no) { const d = buildIssue(+no); return d ? d.html.length : 0; },
     readSet,
+    preview(id) { const a = ARTS.find(x => x.id === id); if (!a) return []; return [coverSlide(a), tldrSlide(a), contentSlides(a)[0]].filter(Boolean); },
     cite(id) { const a = ARTS.find(x => x.id === id); return a ? citeOf(a) : ""; },
     _all() { return slides; }
   };
