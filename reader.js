@@ -22,6 +22,7 @@
   };
 
   /* ---------- 已讀紀錄（只存在讀者自己的瀏覽器） ---------- */
+  try { localStorage.removeItem("kb-read"); } catch (e) {}   /* 已停用已讀紀錄，順手清掉舊資料 */
   function readSet() { try { return new Set(JSON.parse(store.get("kb-read") || "[]")); } catch (e) { return new Set(); } }
   function markRead(id) { const s = readSet(); if (!s.has(id)) { s.add(id); store.set("kb-read", JSON.stringify([...s])); } }
 
@@ -244,7 +245,6 @@
     root.querySelectorAll("#rDots button").forEach((b, k) => b.classList.toggle("on", k === cur));
     if (sec.dataset.score) renderScore(sec);
     shrink(sec);
-    if (sec.dataset.read) markRead(sec.dataset.read);
     if (push !== false) { try { history.replaceState(null, "", deck.base + "/" + (cur + 1)); } catch (e) {} }
   }
 

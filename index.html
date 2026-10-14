@@ -273,16 +273,16 @@ details.archive summary { cursor: pointer; font-weight: 700; color: var(--title)
 .hero { background: linear-gradient(180deg, color-mix(in srgb, var(--paper) 55%, var(--ground)), var(--ground)); padding-bottom: 70px; }
 .hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden;
   background:
-    radial-gradient(520px 380px at 12% 18%, color-mix(in srgb, #2F6DB5 14%, transparent), transparent 70%),
-    radial-gradient(460px 360px at 62% 8%, color-mix(in srgb, #0E7C74 12%, transparent), transparent 70%),
-    radial-gradient(520px 420px at 88% 72%, color-mix(in srgb, #7048B0 12%, transparent), transparent 70%),
-    radial-gradient(circle, color-mix(in srgb, var(--brand) 18%, transparent) 0 1.4px, transparent 2px) 0 0 / 24px 24px; }
+    radial-gradient(640px 460px at 78% 45%, color-mix(in srgb, var(--brand) 9%, transparent), transparent 70%),
+    radial-gradient(circle, color-mix(in srgb, var(--brand) 12%, transparent) 0 1.2px, transparent 1.8px) 0 0 / 26px 26px; }
 .hero-bg { -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
 .lockup { display: flex; width: fit-content; max-width: 100%; align-items: center; gap: 14px; background: color-mix(in srgb, var(--paper) 85%, transparent); border: 1px solid var(--line); border-radius: 20px; padding: 8px 18px 8px 8px; box-shadow: var(--shadow); margin-bottom: 18px; }
 .lockup img { width: 92px; height: 92px; border-radius: 50%; box-shadow: 0 4px 12px rgba(23,54,93,.12); }
 .lockup b { display: block; font-size: 19px; color: var(--title); font-weight: 900; line-height: 1.35; }
 .lockup span { display: block; font-size: 15.5px; color: var(--mute); font-weight: 500; }
 .hero h1 .grad { background: linear-gradient(120deg, #2F6DB5, #0E7C74 55%, #7048B0); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: 4px; }
+.hmeta { margin: 6px 0 0; font-size: 15px; color: var(--mute); }
+.hmeta i { font-style: normal; margin: 0 8px; opacity: .6; }
 .hstats { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
 .hstats span { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; font-size: 14.5px; color: var(--mute); }
 .hstats b { color: var(--title); font-size: 16px; margin-right: 3px; font-variant-numeric: tabular-nums; }
@@ -602,7 +602,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   const R = window.KBReader;
   const PAGES = Object.fromEntries(ARTS.map(a => [a.id, R ? R.pages(a.id) : 0]));
   const mins = a => Math.max(2, Math.round((PAGES[a.id] || 6) * 0.35));
-  let READ = R ? R.readSet() : new Set();
+  const READ = new Set();
 
   /* ---------- 篩選狀態 ---------- */
   const state = { q: "", topic: "", issue: "", searchOpen: false };
@@ -621,7 +621,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
   /* 大卡：最新三則，平板裡放這則簡報的即時預覽 */
   function bigTile(a, i) {
     const t = T[a.topics[0]] || {};
-    const badge = READ.has(a.id) ? "✓ 已讀" : "NEW";
+    const badge = "NEW";
     return `<a class="featcard newscard tilt ${i % 2 ? "flip" : ""}" href="#/s/${a.id}" style="--c:${color(a)}">
       <div class="device"><div class="screen mini" data-id="${a.id}" data-auto="1"><span class="ph">${deco(a)}</span></div></div>
       <div class="fc-text">
@@ -640,7 +640,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
       <div class="nc-body">
         <span class="nc-tag">${t.emoji || ""} ${esc(t.name || "")}</span>
         <h3>${hl(a.title, q)}</h3>
-        <div class="meta">${fmtDate(a._date)}${a.authors ? " · " + esc(a.authors) : ""}${NEWEST.has(a.id) && !READ.has(a.id) ? ' · <span class="new">NEW</span>' : ""}${READ.has(a.id) ? ' · <span class="read">✓ 已讀</span>' : ""}</div>
+        <div class="meta">${fmtDate(a._date)}${a.authors ? " · " + esc(a.authors) : ""}${NEWEST.has(a.id) ? ' · <span class="new">NEW</span>' : ""}</div>
       </div>
     </article>`;
   }
@@ -677,8 +677,7 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
 
   /* ---------- 首頁 ---------- */
   function renderHome(scrollTo) {
-    const unread = ARTS.filter(a => !READ.has(a.id)).length;
-    const first = sorted.find(a => !READ.has(a.id)) || sorted[0];
+    const first = sorted[0];
     const used = TOPICS.filter(t => ARTS.some(a => a.topics.includes(t.key)));
     app.innerHTML = `
     <section class="hero"><div class="hero-bg" aria-hidden="true"></div><div class="wrap">
@@ -687,19 +686,12 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
         <div><b>數位科技轉化大學師培課程培訓計畫</b><span>陳佩英教授計畫團隊</span></div>
       </div>
       <span class="kick">📰 國際 AI 教育政策與實踐新知</span>
-      <h1><span class="grad">AI</span>教育資訊快報</h1>
+      <h1>AI教育資訊快報</h1>
       <div class="cta-row">
-        ${first ? `<a class="playbtn" href="#/s/${first.id}">▶ ${READ.size ? "從下一則未讀開始" : "從最新一則開始"}</a>` : ""}
+        ${first ? `<a class="playbtn" href="#/s/${first.id}">▶ 從最新一則開始</a>` : ""}
         <a class="ghostbtn" href="#/" data-jump="all">瀏覽全部 ↓</a>
       </div>
-      <div class="hstats">
-        <span><b>${ARTS.length}</b>則新知</span>
-        <span><b>${used.length}</b>個主題</span>
-        <span><b>${ISSUES.length}</b>期快報合輯</span>
-        <span>最近更新 <b>${fmtDate(sorted[0] ? sorted[0]._date : "")}</b></span>
-        ${READ.size ? `<span class="unread">還有 <b>${unread}</b> 則未讀</span>` : ""}
-      </div>
-      <div class="htopics"><span class="lbl">快速瀏覽</span>${used.slice(0, 6).map(t => `<a class="tchip" style="--c:${t.color}" href="#/topic/${t.key}">${t.emoji} ${esc(t.name)}</a>`).join("")}</div>
+      <p class="hmeta">${ARTS.length} 則新知<i>·</i>${used.length} 個主題<i>·</i>${ISSUES.length} 期快報合輯<i>·</i>最近更新 ${fmtDate(sorted[0] ? sorted[0]._date : "")}</p>
       <p class="hero-copy">© 2026 陳佩英教授計畫團隊・數位科技轉化大學師培課程培訓計畫</p>
       <div class="hero3d" id="hero3d" aria-hidden="true"><div class="orb-fallback"></div></div>
       <img class="hero-art" src="assets/mascot-community.webp" alt="計畫主視覺：吉祥物與教授、教師、學生共學" width="1536" height="1024" fetchpriority="high">
@@ -1042,7 +1034,6 @@ footer { padding: 30px 0 46px; color: var(--mute); font-size: 14.5px; text-align
     if (kind === "x" && openFeature(val)) { if (!app.innerHTML) renderHome(); return; }
     closeFeature();
     if (R) R.close();
-    READ = R ? R.readSet() : new Set();
     if (kind !== "a") document.title = "AI教育資訊快報";
     if (kind === "a" && val) return renderArticle(decodeURIComponent(val));
     if (kind === "topic") { state.topic = val || ""; state.issue = ""; state.q = ""; return renderHome("all"); }
